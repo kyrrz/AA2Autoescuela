@@ -1,0 +1,15 @@
+name: autoescuela_aa2
+services:
+  db:
+    image: mariadb:11.3.2
+    container_name: autoescuela-db-2
+    environment:
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MYSQL_USER: $MARIADB_USER
+      MYSQL_PASSWORD: $MARIADB_PASSWORD
+      MYSQL_DATABASE: $MARIADB_DATABASE
+    ports:
+      - "3306:3306"
+    volumes:
+      - C:\Users\kyrrz\data_aa2_autoescuela:/var/lib/mysql

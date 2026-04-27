@@ -1,0 +1,2701 @@
+openapi: "3.1.0"
+info:
+  title: Autoescuela API
+  description: API REST para la gestión de autoescuelas, alumnos, profesores, coches y matrículas
+  version: "1.0"
+servers:
+  - url: https://localhost:8080
+paths:
+
+  /autoescuelas:
+    get:
+      tags: [ Autoescuelas ]
+      summary: Obtener listado de autoescuelas
+      parameters:
+        - name: ciudad
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ratingG
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: activa
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Listado de autoescuelas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AutoescuelaOutDto"
+              example:
+                - id: 1
+                  nombre: "Autoescuela Central"
+                  direccion: "Av. Independencia 15"
+                  ciudad: "Zaragoza"
+                  telefono: "976123456"
+                  email: "info@autoescuela.es"
+                  rating: 8.4
+                  activa: true
+                - id: 2
+                  nombre: "Autoescuela Norte"
+                  direccion: "Calle Mayor 5"
+                  ciudad: "Madrid"
+                  telefono: "911234567"
+                  email: "norte@autoescuela.es"
+                  rating: 7.2
+                  activa: false
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    post:
+      tags: [ Autoescuelas ]
+      summary: Crear autoescuela
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoescuelaInDto"
+      responses:
+        "201":
+          description: Autoescuela creada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutoescuelaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Autoescuela en Zaragoza
+                  value:
+                    id: 1
+                    nombre: "Autoescuela Central"
+                    direccion: "Av. Independencia 15"
+                    ciudad: "Zaragoza"
+                    telefono: "976123456"
+                    email: "info@autoescuela.es"
+                    rating: 8.4
+                    activa: true
+                    capacidad: 50
+                    fechaApertura: "2015-09-01"
+                    latitud: 41.6488
+                    longitud: -0.8891
+                    coches: []
+                    profesores: []
+                ejemplo2:
+                  summary: Autoescuela en Madrid
+                  value:
+                    id: 2
+                    nombre: "Autoescuela Norte"
+                    direccion: "Calle Mayor 5"
+                    ciudad: "Madrid"
+                    telefono: "911234567"
+                    email: "norte@autoescuela.es"
+                    rating: 7.2
+                    activa: true
+                    capacidad: 30
+                    fechaApertura: "2020-03-15"
+                    latitud: 40.4168
+                    longitud: -3.7038
+                    coches: []
+                    profesores: []
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  nombre: "El nombre es un campo obligatorio"
+                  email: "Formato de email no válido"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /autoescuelas/{id}:
+    get:
+      tags: [ Autoescuelas ]
+      summary: Obtener autoescuela por ID
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Autoescuela encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutoescuelaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Autoescuela activa con coches y profesores
+                  value:
+                    id: 1
+                    nombre: "Autoescuela Central"
+                    direccion: "Av. Independencia 15"
+                    ciudad: "Zaragoza"
+                    telefono: "976123456"
+                    email: "info@autoescuela.es"
+                    rating: 8.4
+                    activa: true
+                    capacidad: 50
+                    fechaApertura: "2015-09-01"
+                    latitud: 41.6488
+                    longitud: -0.8891
+                    coches:
+                      - id: 1
+                        marca: "Seat"
+                        modelo: "Ibiza"
+                        tipoCambio: "Manual"
+                    profesores:
+                      - id: 1
+                        nombre: "Juan"
+                        apellidos: "Pérez López"
+                        dni: "12345678Z"
+                        telefono: "600123456"
+                        especialidad: "Prácticas"
+                        activo: true
+                ejemplo2:
+                  summary: Autoescuela sin coches ni profesores asignados
+                  value:
+                    id: 2
+                    nombre: "Autoescuela Norte"
+                    direccion: "Calle Mayor 5"
+                    ciudad: "Madrid"
+                    telefono: "911234567"
+                    email: "norte@autoescuela.es"
+                    rating: 7.2
+                    activa: false
+                    capacidad: 30
+                    fechaApertura: "2020-03-15"
+                    latitud: 40.4168
+                    longitud: -3.7038
+                    coches: []
+                    profesores: []
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    put:
+      tags: [ Autoescuelas ]
+      summary: Modificar autoescuela
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoescuelaInDto"
+      responses:
+        "200":
+          description: Autoescuela actualizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutoescuelaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Actualización de dirección y capacidad
+                  value:
+                    id: 1
+                    nombre: "Autoescuela Central Actualizada"
+                    direccion: "Av. Independencia 20"
+                    ciudad: "Zaragoza"
+                    telefono: "976123456"
+                    email: "info@autoescuela.es"
+                    rating: 9.0
+                    activa: true
+                    capacidad: 60
+                    fechaApertura: "2015-09-01"
+                    latitud: 41.6488
+                    longitud: -0.8891
+                    coches: []
+                    profesores: []
+                ejemplo2:
+                  summary: Actualización desactivando la autoescuela
+                  value:
+                    id: 2
+                    nombre: "Autoescuela Norte"
+                    direccion: "Calle Mayor 5"
+                    ciudad: "Madrid"
+                    telefono: "911234567"
+                    email: "norte@autoescuela.es"
+                    rating: 7.2
+                    activa: false
+                    capacidad: 30
+                    fechaApertura: "2020-03-15"
+                    latitud: 40.4168
+                    longitud: -3.7038
+                    coches: []
+                    profesores: []
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  email: "Formato de email no válido"
+                  rating: "El rating debe estar entre 0 y 10"
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    patch:
+      tags: [ Autoescuelas ]
+      summary: Actualización parcial de autoescuela
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AutoescuelaInDto"
+      responses:
+        "200":
+          description: Autoescuela actualizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AutoescuelaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Actualización de teléfono y estado
+                  value:
+                    id: 1
+                    nombre: "Autoescuela Central"
+                    direccion: "Av. Independencia 15"
+                    ciudad: "Zaragoza"
+                    telefono: "976999999"
+                    email: "info@autoescuela.es"
+                    rating: 8.4
+                    activa: false
+                    capacidad: 50
+                    fechaApertura: "2015-09-01"
+                    latitud: 41.6488
+                    longitud: -0.8891
+                    coches: []
+                    profesores: []
+                ejemplo2:
+                  summary: Actualización de rating
+                  value:
+                    id: 2
+                    nombre: "Autoescuela Norte"
+                    direccion: "Calle Mayor 5"
+                    ciudad: "Madrid"
+                    telefono: "911234567"
+                    email: "norte@autoescuela.es"
+                    rating: 9.1
+                    activa: true
+                    capacidad: 30
+                    fechaApertura: "2020-03-15"
+                    latitud: 40.4168
+                    longitud: -3.7038
+                    coches: []
+                    profesores: []
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  telefono: "El teléfono debe tener 9 dígitos"
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    delete:
+      tags: [ Autoescuelas ]
+      summary: Eliminar autoescuela
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "204":
+          description: Autoescuela eliminada
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /profesores:
+    get:
+      tags: [ Profesores ]
+      summary: Obtener listado de profesores
+      parameters:
+        - name: especialidad
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: activo
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: nombre
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Listado de profesores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProfesorOutDto"
+              example:
+                - id: 1
+                  nombre: "Juan"
+                  apellidos: "Pérez López"
+                  dni: "12345678Z"
+                  telefono: "600123456"
+                  especialidad: "Prácticas"
+                  activo: true
+                - id: 2
+                  nombre: "María"
+                  apellidos: "García Ruiz"
+                  dni: "87654321A"
+                  telefono: "600987654"
+                  especialidad: "Teoría"
+                  activo: true
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    post:
+      tags: [ Profesores ]
+      summary: Crear profesor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfesorInDto"
+      responses:
+        "201":
+          description: Profesor creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfesorDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Profesor de prácticas
+                  value:
+                    id: 1
+                    nombre: "Juan"
+                    apellidos: "Pérez López"
+                    dni: "12345678Z"
+                    telefono: "600123456"
+                    salario: 2200.50
+                    fechaContratacion: "2022-03-01"
+                    especialidad: "Prácticas"
+                    activo: true
+                    autoescuelas:
+                      - id: 1
+                        nombre: "Autoescuela Central"
+                        direccion: "Av. Independencia 15"
+                        ciudad: "Zaragoza"
+                        telefono: "976123456"
+                        email: "info@autoescuela.es"
+                        rating: 8.4
+                        activa: true
+                ejemplo2:
+                  summary: Profesor de teoría sin autoescuela asignada
+                  value:
+                    id: 2
+                    nombre: "María"
+                    apellidos: "García Ruiz"
+                    dni: "87654321A"
+                    telefono: "600987654"
+                    salario: 1950.00
+                    fechaContratacion: "2023-09-01"
+                    especialidad: "Teoría"
+                    activo: true
+                    autoescuelas: []
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  dni: "Formato de DNI no válido"
+                  telefono: "El teléfono debe tener 9 dígitos"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /profesores/{id}:
+    get:
+      tags: [ Profesores ]
+      summary: Obtener profesor por ID
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Profesor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfesorDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Profesor con autoescuelas asignadas
+                  value:
+                    id: 1
+                    nombre: "Juan"
+                    apellidos: "Pérez López"
+                    dni: "12345678Z"
+                    telefono: "600123456"
+                    salario: 2200.50
+                    fechaContratacion: "2022-03-01"
+                    especialidad: "Prácticas"
+                    activo: true
+                    autoescuelas:
+                      - id: 1
+                        nombre: "Autoescuela Central"
+                        ciudad: "Zaragoza"
+                        activa: true
+                ejemplo2:
+                  summary: Profesor inactivo sin autoescuelas
+                  value:
+                    id: 3
+                    nombre: "Pedro"
+                    apellidos: "Sánchez Mora"
+                    dni: "11223344B"
+                    telefono: "611223344"
+                    salario: 1800.00
+                    fechaContratacion: "2019-06-15"
+                    especialidad: "Teoría"
+                    activo: false
+                    autoescuelas: []
+        "404":
+          description: Profesor no encontrado
+          content:
+            application/json:
+              example:
+                message: "Profesor no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    put:
+      tags: [ Profesores ]
+      summary: Modificar profesor
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfesorInDto"
+      responses:
+        "200":
+          description: Profesor actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfesorDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Cambio de especialidad y salario
+                  value:
+                    id: 1
+                    nombre: "Juan"
+                    apellidos: "Pérez López"
+                    dni: "12345678Z"
+                    telefono: "600111222"
+                    salario: 2500.00
+                    fechaContratacion: "2022-03-01"
+                    especialidad: "Teoría"
+                    activo: true
+                    autoescuelas: []
+                ejemplo2:
+                  summary: Actualización completa de datos personales
+                  value:
+                    id: 2
+                    nombre: "María"
+                    apellidos: "García Ruiz"
+                    dni: "87654321A"
+                    telefono: "600555666"
+                    salario: 2100.00
+                    fechaContratacion: "2023-09-01"
+                    especialidad: "Prácticas"
+                    activo: true
+                    autoescuelas:
+                      - id: 1
+                        nombre: "Autoescuela Central"
+                        ciudad: "Zaragoza"
+                        activa: true
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  dni: "Formato de DNI no válido"
+                  salario: "El salario debe ser un valor positivo"
+        "404":
+          description: Profesor no encontrado
+          content:
+            application/json:
+              example:
+                message: "Profesor no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    patch:
+      tags: [ Profesores ]
+      summary: Actualización parcial de profesor
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProfesorInDto"
+      responses:
+        "200":
+          description: Profesor actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProfesorDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Desactivar profesor
+                  value:
+                    id: 1
+                    nombre: "Juan"
+                    apellidos: "Pérez López"
+                    dni: "12345678Z"
+                    telefono: "600123456"
+                    salario: 2200.50
+                    fechaContratacion: "2022-03-01"
+                    especialidad: "Prácticas"
+                    activo: false
+                    autoescuelas: []
+                ejemplo2:
+                  summary: Actualización de teléfono
+                  value:
+                    id: 2
+                    nombre: "María"
+                    apellidos: "García Ruiz"
+                    dni: "87654321A"
+                    telefono: "699887766"
+                    salario: 1950.00
+                    fechaContratacion: "2023-09-01"
+                    especialidad: "Teoría"
+                    activo: true
+                    autoescuelas: []
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  telefono: "El teléfono debe tener 9 dígitos"
+        "404":
+          description: Profesor no encontrado
+          content:
+            application/json:
+              example:
+                message: "Profesor no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    delete:
+      tags: [ Profesores ]
+      summary: Eliminar profesor
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "204":
+          description: Profesor eliminado
+        "404":
+          description: Profesor no encontrado
+          content:
+            application/json:
+              example:
+                message: "Profesor no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /alumnos:
+    get:
+      tags: [ Alumnos ]
+      summary: Obtener listado de alumnos
+      parameters:
+        - name: nombre
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ciudad
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: usaGafas
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: notaTeorico
+          in: query
+          required: false
+          schema:
+            type: number
+            format: float
+      responses:
+        "200":
+          description: Listado de alumnos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlumnoOutDto"
+              example:
+                - id: 5
+                  nombre: "Carlos"
+                  apellidos: "García López"
+                  dni: "12345678Z"
+                  ciudad: "Zaragoza"
+                  notaTeorico: 7.5
+                - id: 6
+                  nombre: "Laura"
+                  apellidos: "Martínez Sanz"
+                  dni: "98765432B"
+                  ciudad: "Madrid"
+                  notaTeorico: 9.0
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    post:
+      tags: [ Alumnos ]
+      summary: Crear alumno
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlumnoInDto"
+      responses:
+        "201":
+          description: Alumno creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlumnoDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Alumno con nota teórico asignado a autoescuela
+                  value:
+                    id: 5
+                    nombre: "Carlos"
+                    apellidos: "García López"
+                    email: "carlos@gmail.com"
+                    telefono: "600123456"
+                    direccion: "Calle Mayor 12"
+                    ciudad: "Zaragoza"
+                    dni: "12345678Z"
+                    fechaNacimiento: "2000-05-20"
+                    usaGafas: true
+                    notaTeorico: 7.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Alumno sin nota teórico ni autoescuela
+                  value:
+                    id: 6
+                    nombre: "Laura"
+                    apellidos: "Martínez Sanz"
+                    email: "laura@gmail.com"
+                    telefono: "611223344"
+                    direccion: "Gran Vía 55"
+                    ciudad: "Madrid"
+                    dni: "98765432B"
+                    fechaNacimiento: "2003-11-10"
+                    usaGafas: false
+                    notaTeorico: null
+                    autoescuela: null
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  dni: "Formato de DNI no válido"
+                  email: "Formato de email no válido"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /alumnos/{id}:
+    get:
+      tags: [ Alumnos ]
+      summary: Obtener alumno por ID
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Alumno encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlumnoDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Alumno con autoescuela asignada
+                  value:
+                    id: 5
+                    nombre: "Carlos"
+                    apellidos: "García López"
+                    email: "carlos@gmail.com"
+                    telefono: "600123456"
+                    direccion: "Calle Mayor 12"
+                    ciudad: "Zaragoza"
+                    dni: "12345678Z"
+                    fechaNacimiento: "2000-05-20"
+                    usaGafas: true
+                    notaTeorico: 7.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Alumno sin autoescuela asignada
+                  value:
+                    id: 6
+                    nombre: "Laura"
+                    apellidos: "Martínez Sanz"
+                    email: "laura@gmail.com"
+                    telefono: "611223344"
+                    direccion: "Gran Vía 55"
+                    ciudad: "Madrid"
+                    dni: "98765432B"
+                    fechaNacimiento: "2003-11-10"
+                    usaGafas: false
+                    notaTeorico: null
+                    autoescuela: null
+        "404":
+          description: Alumno no encontrado
+          content:
+            application/json:
+              example:
+                message: "Alumno no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    put:
+      tags: [ Alumnos ]
+      summary: Modificar alumno
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlumnoInDto"
+      responses:
+        "200":
+          description: Alumno actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlumnoDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Actualización de datos de contacto
+                  value:
+                    id: 5
+                    nombre: "Carlos"
+                    apellidos: "García López"
+                    email: "carlos.nuevo@gmail.com"
+                    telefono: "600999888"
+                    direccion: "Calle Nueva 33"
+                    ciudad: "Zaragoza"
+                    dni: "12345678Z"
+                    fechaNacimiento: "2000-05-20"
+                    usaGafas: false
+                    notaTeorico: 8.0
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Alumno trasladado a otra ciudad sin autoescuela
+                  value:
+                    id: 6
+                    nombre: "Laura"
+                    apellidos: "Martínez Sanz"
+                    email: "laura@gmail.com"
+                    telefono: "611223344"
+                    direccion: "Calle Goya 10"
+                    ciudad: "Barcelona"
+                    dni: "98765432B"
+                    fechaNacimiento: "2003-11-10"
+                    usaGafas: true
+                    notaTeorico: 6.5
+                    autoescuela: null
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  email: "Formato de email no válido"
+                  notaTeorico: "La nota debe estar entre 1 y 10"
+        "404":
+          description: Alumno no encontrado
+          content:
+            application/json:
+              example:
+                message: "Alumno no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    patch:
+      tags: [ Alumnos ]
+      summary: Actualización parcial de alumno
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlumnoInDto"
+      responses:
+        "200":
+          description: Alumno actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlumnoDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Actualización de nota teórico
+                  value:
+                    id: 5
+                    nombre: "Carlos"
+                    apellidos: "García López"
+                    email: "carlos@gmail.com"
+                    telefono: "600123456"
+                    direccion: "Calle Mayor 12"
+                    ciudad: "Zaragoza"
+                    dni: "12345678Z"
+                    fechaNacimiento: "2000-05-20"
+                    usaGafas: true
+                    notaTeorico: 9.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Actualización de uso de gafas
+                  value:
+                    id: 6
+                    nombre: "Laura"
+                    apellidos: "Martínez Sanz"
+                    email: "laura@gmail.com"
+                    telefono: "611223344"
+                    direccion: "Gran Vía 55"
+                    ciudad: "Madrid"
+                    dni: "98765432B"
+                    fechaNacimiento: "2003-11-10"
+                    usaGafas: true
+                    notaTeorico: 9.0
+                    autoescuela: null
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  notaTeorico: "La nota debe estar entre 1 y 10"
+        "404":
+          description: Alumno no encontrado
+          content:
+            application/json:
+              example:
+                message: "Alumno no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    delete:
+      tags: [ Alumnos ]
+      summary: Eliminar alumno
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "204":
+          description: Alumno eliminado
+        "404":
+          description: Alumno no encontrado
+          content:
+            application/json:
+              example:
+                message: "Alumno no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /coches:
+    get:
+      tags: [ Coches ]
+      summary: Obtener listado de coches
+      parameters:
+        - name: marca
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: modelo
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: tipoCambio
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Listado de coches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CocheOutDto"
+              example:
+                - id: 1
+                  marca: "Seat"
+                  modelo: "Ibiza"
+                  tipoCambio: "Manual"
+                - id: 2
+                  marca: "Volkswagen"
+                  modelo: "Golf"
+                  tipoCambio: "Automático"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    post:
+      tags: [ Coches ]
+      summary: Crear coche
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CocheInDto"
+      responses:
+        "201":
+          description: Coche creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocheDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Coche manual disponible
+                  value:
+                    id: 1
+                    marca: "Seat"
+                    modelo: "Ibiza"
+                    tipoCambio: "Manual"
+                    matricula: "1234BCD"
+                    kilometraje: 45000
+                    precioCompra: 12000.50
+                    fechaCompra: "2023-01-10"
+                    disponible: true
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Coche automático sin autoescuela asignada
+                  value:
+                    id: 2
+                    marca: "Volkswagen"
+                    modelo: "Golf"
+                    tipoCambio: "Automático"
+                    matricula: "5678EFG"
+                    kilometraje: 12000
+                    precioCompra: 22000.00
+                    fechaCompra: "2024-03-20"
+                    disponible: true
+                    autoescuela: null
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  matricula: "Formato de matrícula no válido"
+                  kilometraje: "El kilometraje debe ser positivo"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /coches/{id}:
+    get:
+      tags: [ Coches ]
+      summary: Obtener coche por ID
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Coche encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocheDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Coche disponible con autoescuela
+                  value:
+                    id: 1
+                    marca: "Seat"
+                    modelo: "Ibiza"
+                    tipoCambio: "Manual"
+                    matricula: "1234BCD"
+                    kilometraje: 45000
+                    precioCompra: 12000.50
+                    fechaCompra: "2023-01-10"
+                    disponible: true
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Coche no disponible
+                  value:
+                    id: 2
+                    marca: "Volkswagen"
+                    modelo: "Golf"
+                    tipoCambio: "Automático"
+                    matricula: "5678EFG"
+                    kilometraje: 62000
+                    precioCompra: 22000.00
+                    fechaCompra: "2024-03-20"
+                    disponible: false
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+        "404":
+          description: Coche no encontrado
+          content:
+            application/json:
+              example:
+                message: "Coche no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    put:
+      tags: [ Coches ]
+      summary: Modificar coche
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CocheInDto"
+      responses:
+        "200":
+          description: Coche actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocheDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Actualización de kilometraje y disponibilidad
+                  value:
+                    id: 1
+                    marca: "Seat"
+                    modelo: "Ibiza"
+                    tipoCambio: "Automático"
+                    matricula: "1234BCD"
+                    kilometraje: 50000
+                    precioCompra: 12000.50
+                    fechaCompra: "2023-01-10"
+                    disponible: false
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Actualización completa reasignando autoescuela
+                  value:
+                    id: 2
+                    marca: "Volkswagen"
+                    modelo: "Golf"
+                    tipoCambio: "Automático"
+                    matricula: "5678EFG"
+                    kilometraje: 65000
+                    precioCompra: 22000.00
+                    fechaCompra: "2024-03-20"
+                    disponible: true
+                    autoescuela:
+                      id: 2
+                      nombre: "Autoescuela Norte"
+                      ciudad: "Madrid"
+                      activa: true
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  matricula: "Formato de matrícula no válido"
+                  precioCompra: "El precio de compra debe ser un valor positivo"
+        "404":
+          description: Coche no encontrado
+          content:
+            application/json:
+              example:
+                message: "Coche no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    patch:
+      tags: [ Coches ]
+      summary: Actualización parcial de coche
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CocheInDto"
+      responses:
+        "200":
+          description: Coche actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CocheDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Actualización de kilometraje
+                  value:
+                    id: 1
+                    marca: "Seat"
+                    modelo: "Ibiza"
+                    tipoCambio: "Manual"
+                    matricula: "1234BCD"
+                    kilometraje: 47000
+                    precioCompra: 12000.50
+                    fechaCompra: "2023-01-10"
+                    disponible: true
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Marcar coche como no disponible
+                  value:
+                    id: 2
+                    marca: "Volkswagen"
+                    modelo: "Golf"
+                    tipoCambio: "Automático"
+                    matricula: "5678EFG"
+                    kilometraje: 62000
+                    precioCompra: 22000.00
+                    fechaCompra: "2024-03-20"
+                    disponible: false
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  kilometraje: "El kilometraje debe ser positivo"
+        "404":
+          description: Coche no encontrado
+          content:
+            application/json:
+              example:
+                message: "Coche no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    delete:
+      tags: [ Coches ]
+      summary: Eliminar coche
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "204":
+          description: Eliminado correctamente
+        "404":
+          description: Coche no encontrado
+          content:
+            application/json:
+              example:
+                message: "Coche no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /matriculas:
+    get:
+      tags: [ Matriculas ]
+      summary: Obtener listado de matrículas
+      parameters:
+        - name: modalidad
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: tipoMatricula
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: horasPracticas
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: horasTeoricas
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: Listado de matrículas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MatriculaOutDto"
+              example:
+                - id: 10
+                  modalidad: "Presencial"
+                  tipoMatricula: "B"
+                  completada: false
+                  autoescuela:
+                    id: 1
+                    nombre: "Autoescuela Central"
+                    ciudad: "Zaragoza"
+                    activa: true
+                  alumno:
+                    id: 5
+                    nombre: "Carlos"
+                    apellidos: "García López"
+                    dni: "12345678Z"
+                    ciudad: "Zaragoza"
+                    notaTeorico: 7.5
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    post:
+      tags: [ Matriculas ]
+      summary: Crear matrícula
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MatriculaInDto"
+      responses:
+        "201":
+          description: Matrícula creada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatriculaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Matrícula presencial en curso
+                  value:
+                    id: 10
+                    modalidad: "Presencial"
+                    tipoMatricula: "B"
+                    horasPracticas: 20
+                    horasTeoricas: 15
+                    completada: false
+                    observaciones: "Pendiente de examen práctico"
+                    alumno:
+                      id: 5
+                      nombre: "Carlos"
+                      apellidos: "García López"
+                      dni: "12345678Z"
+                      ciudad: "Zaragoza"
+                      notaTeorico: 7.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Matrícula online sin observaciones
+                  value:
+                    id: 11
+                    modalidad: "Online"
+                    tipoMatricula: "A"
+                    horasPracticas: 10
+                    horasTeoricas: 20
+                    completada: false
+                    observaciones: null
+                    alumno:
+                      id: 6
+                      nombre: "Laura"
+                      apellidos: "Martínez Sanz"
+                      dni: "98765432B"
+                      ciudad: "Madrid"
+                      notaTeorico: 9.0
+                    autoescuela:
+                      id: 2
+                      nombre: "Autoescuela Norte"
+                      ciudad: "Madrid"
+                      activa: true
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  modalidad: "La modalidad es un campo obligatorio"
+                  precio: "El precio debe ser positivo"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /matriculas/{id}:
+    get:
+      tags: [ Matriculas ]
+      summary: Obtener matrícula por ID
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Matrícula encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatriculaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Matrícula no completada
+                  value:
+                    id: 10
+                    modalidad: "Presencial"
+                    tipoMatricula: "B"
+                    horasPracticas: 20
+                    horasTeoricas: 15
+                    completada: false
+                    observaciones: "Pendiente de examen práctico"
+                    alumno:
+                      id: 5
+                      nombre: "Carlos"
+                      apellidos: "García López"
+                      dni: "12345678Z"
+                      ciudad: "Zaragoza"
+                      notaTeorico: 7.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Matrícula completada
+                  value:
+                    id: 11
+                    modalidad: "Online"
+                    tipoMatricula: "A"
+                    horasPracticas: 10
+                    horasTeoricas: 20
+                    completada: true
+                    observaciones: "Examen superado con éxito"
+                    alumno:
+                      id: 6
+                      nombre: "Laura"
+                      apellidos: "Martínez Sanz"
+                      dni: "98765432B"
+                      ciudad: "Madrid"
+                      notaTeorico: 9.0
+                    autoescuela:
+                      id: 2
+                      nombre: "Autoescuela Norte"
+                      ciudad: "Madrid"
+                      activa: true
+        "404":
+          description: Matrícula no encontrada
+          content:
+            application/json:
+              example:
+                message: "Matrícula no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    put:
+      tags: [ Matriculas ]
+      summary: Modificar matrícula
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MatriculaInDto"
+      responses:
+        "200":
+          description: Matrícula actualizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatriculaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Cambio a modalidad online
+                  value:
+                    id: 10
+                    modalidad: "Online"
+                    tipoMatricula: "B"
+                    horasPracticas: 25
+                    horasTeoricas: 15
+                    completada: false
+                    observaciones: "Cambio a modalidad online"
+                    alumno:
+                      id: 5
+                      nombre: "Carlos"
+                      apellidos: "García López"
+                      dni: "12345678Z"
+                      ciudad: "Zaragoza"
+                      notaTeorico: 7.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Actualización completa marcando como completada
+                  value:
+                    id: 11
+                    modalidad: "Presencial"
+                    tipoMatricula: "B"
+                    horasPracticas: 30
+                    horasTeoricas: 20
+                    completada: true
+                    observaciones: "Alumno superó todos los exámenes"
+                    alumno:
+                      id: 6
+                      nombre: "Laura"
+                      apellidos: "Martínez Sanz"
+                      dni: "98765432B"
+                      ciudad: "Madrid"
+                      notaTeorico: 9.0
+                    autoescuela:
+                      id: 2
+                      nombre: "Autoescuela Norte"
+                      ciudad: "Madrid"
+                      activa: true
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  horasPracticas: "Las horas prácticas deben ser al menos 1"
+                  precio: "El precio debe ser positivo"
+        "404":
+          description: Matrícula no encontrada
+          content:
+            application/json:
+              example:
+                message: "Matrícula no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    patch:
+      tags: [ Matriculas ]
+      summary: Actualización parcial de matrícula
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MatriculaInDto"
+      responses:
+        "200":
+          description: Matrícula actualizada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatriculaDetailOutDto"
+              examples:
+                ejemplo1:
+                  summary: Marcar matrícula como completada
+                  value:
+                    id: 10
+                    modalidad: "Presencial"
+                    tipoMatricula: "B"
+                    horasPracticas: 20
+                    horasTeoricas: 15
+                    completada: true
+                    observaciones: "Examen superado"
+                    alumno:
+                      id: 5
+                      nombre: "Carlos"
+                      apellidos: "García López"
+                      dni: "12345678Z"
+                      ciudad: "Zaragoza"
+                      notaTeorico: 7.5
+                    autoescuela:
+                      id: 1
+                      nombre: "Autoescuela Central"
+                      ciudad: "Zaragoza"
+                      activa: true
+                ejemplo2:
+                  summary: Actualización de observaciones
+                  value:
+                    id: 11
+                    modalidad: "Online"
+                    tipoMatricula: "A"
+                    horasPracticas: 10
+                    horasTeoricas: 20
+                    completada: false
+                    observaciones: "Pendiente de revisión médica"
+                    alumno:
+                      id: 6
+                      nombre: "Laura"
+                      apellidos: "Martínez Sanz"
+                      dni: "98765432B"
+                      ciudad: "Madrid"
+                      notaTeorico: 9.0
+                    autoescuela:
+                      id: 2
+                      nombre: "Autoescuela Norte"
+                      ciudad: "Madrid"
+                      activa: true
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              example:
+                message: "Datos inválidos"
+                errors:
+                  horasTeoricas: "Las horas teóricas deben ser al menos 1"
+        "404":
+          description: Matrícula no encontrada
+          content:
+            application/json:
+              example:
+                message: "Matrícula no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+    delete:
+      tags: [ Matriculas ]
+      summary: Eliminar matrícula
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "204":
+          description: Matrícula eliminada
+        "404":
+          description: Matrícula no encontrada
+          content:
+            application/json:
+              example:
+                message: "Matrícula no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /autoescuelas/{id}/profesores:
+    get:
+      tags: [ Compuestas ]
+      summary: Obtener profesores de una autoescuela
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Lista de profesores de la autoescuela
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProfesorOutDto"
+              example:
+                - id: 1
+                  nombre: "Juan"
+                  apellidos: "Pérez López"
+                  dni: "12345678Z"
+                  telefono: "600123456"
+                  especialidad: "Prácticas"
+                  activo: true
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /autoescuelas/{id}/coches:
+    get:
+      tags: [ Compuestas ]
+      summary: Obtener coches de una autoescuela
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Lista de coches de la autoescuela
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CocheOutDto"
+              example:
+                - id: 1
+                  marca: "Seat"
+                  modelo: "Ibiza"
+                  tipoCambio: "Manual"
+                - id: 2
+                  marca: "Volkswagen"
+                  modelo: "Golf"
+                  tipoCambio: "Automático"
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /autoescuelas/{id}/matriculas:
+    get:
+      tags: [ Compuestas ]
+      summary: Obtener matrículas de una autoescuela
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Lista de matrículas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MatriculaOutDto"
+              example:
+                - id: 10
+                  modalidad: "Presencial"
+                  tipoMatricula: "B"
+                  completada: false
+                  autoescuela:
+                    id: 1
+                    nombre: "Autoescuela Central"
+                    ciudad: "Zaragoza"
+                    activa: true
+                  alumno:
+                    id: 5
+                    nombre: "Carlos"
+                    apellidos: "García López"
+                    dni: "12345678Z"
+                    ciudad: "Zaragoza"
+                    notaTeorico: 7.5
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /autoescuelas/{id}/matriculas/completadas:
+    get:
+      tags: [ Compuestas ]
+      summary: Obtener matrículas completadas de una autoescuela
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Lista de matrículas completadas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MatriculaOutDto"
+              example:
+                - id: 11
+                  modalidad: "Presencial"
+                  tipoMatricula: "B"
+                  completada: true
+                  autoescuela:
+                    id: 1
+                    nombre: "Autoescuela Central"
+                    ciudad: "Zaragoza"
+                    activa: true
+                  alumno:
+                    id: 6
+                    nombre: "Laura"
+                    apellidos: "Martínez Sanz"
+                    dni: "98765432B"
+                    ciudad: "Madrid"
+                    notaTeorico: 9.0
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /autoescuelas/{id}/alumnos:
+    get:
+      tags: [ Compuestas ]
+      summary: Obtener alumnos de una autoescuela
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Lista de alumnos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AlumnoOutDto"
+              example:
+                - id: 5
+                  nombre: "Carlos"
+                  apellidos: "García López"
+                  dni: "12345678Z"
+                  ciudad: "Zaragoza"
+                  notaTeorico: 7.5
+        "404":
+          description: Autoescuela no encontrada
+          content:
+            application/json:
+              example:
+                message: "Autoescuela no encontrada"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+  /profesores/{id}/autoescuelas:
+    get:
+      tags: [ Compuestas ]
+      summary: Obtener autoescuelas en las que imparte un profesor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Lista de autoescuelas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AutoescuelaOutDto"
+              example:
+                - id: 1
+                  nombre: "Autoescuela Central"
+                  direccion: "Av. Independencia 15"
+                  ciudad: "Zaragoza"
+                  telefono: "976123456"
+                  email: "info@autoescuela.es"
+                  rating: 8.4
+                  activa: true
+        "404":
+          description: Profesor no encontrado
+          content:
+            application/json:
+              example:
+                message: "Profesor no encontrado"
+                code: 404
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              example:
+                message: "Error interno del servidor"
+                code: 500
+
+components:
+  parameters:
+    IdPath:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+  schemas:
+
+    AutoescuelaInDto:
+      type: object
+      required:
+        - nombre
+        - direccion
+        - ciudad
+        - telefono
+        - email
+        - capacidad
+        - rating
+        - fechaApertura
+        - activa
+      properties:
+        nombre:
+          type: string
+          example: "Autoescuela Central"
+        direccion:
+          type: string
+          example: "Av. Independencia 15"
+        ciudad:
+          type: string
+          example: "Zaragoza"
+        telefono:
+          type: string
+          example: "976123456"
+        email:
+          type: string
+          format: email
+          example: "info@autoescuela.es"
+        capacidad:
+          type: integer
+          minimum: 0
+          example: 50
+        rating:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 10
+          example: 8.4
+        fechaApertura:
+          type: string
+          format: date
+          example: "2015-09-01"
+        activa:
+          type: boolean
+          example: true
+
+    AutoescuelaOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        nombre:
+          type: string
+          example: "Autoescuela Central"
+        direccion:
+          type: string
+          example: "Av. Independencia 15"
+        ciudad:
+          type: string
+          example: "Zaragoza"
+        telefono:
+          type: string
+          example: "976123456"
+        email:
+          type: string
+          example: "info@autoescuela.es"
+        rating:
+          type: number
+          format: float
+          example: 8.4
+        activa:
+          type: boolean
+          example: true
+
+    AutoescuelaDetailOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        nombre:
+          type: string
+          example: "Autoescuela Central"
+        direccion:
+          type: string
+          example: "Av. Independencia 15"
+        ciudad:
+          type: string
+          example: "Zaragoza"
+        telefono:
+          type: string
+          example: "976123456"
+        email:
+          type: string
+          example: "info@autoescuela.es"
+        rating:
+          type: number
+          format: float
+          example: 8.4
+        activa:
+          type: boolean
+          example: true
+        capacidad:
+          type: integer
+          example: 50
+        fechaApertura:
+          type: string
+          format: date
+          example: "2015-09-01"
+        latitud:
+          type: number
+          format: double
+          example: 41.6488
+        longitud:
+          type: number
+          format: double
+          example: -0.8891
+        coches:
+          type: array
+          items:
+            $ref: "#/components/schemas/CocheOutDto"
+        profesores:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProfesorOutDto"
+
+    ProfesorInDto:
+      type: object
+      required:
+        - nombre
+        - apellidos
+        - dni
+        - telefono
+        - salario
+        - fechaContratacion
+        - especialidad
+        - activo
+      properties:
+        nombre:
+          type: string
+          example: "Juan"
+        apellidos:
+          type: string
+          example: "Pérez López"
+        dni:
+          type: string
+          pattern: "[0-9]{8}[A-Z]"
+          example: "12345678Z"
+        telefono:
+          type: string
+          pattern: "[0-9]{9}"
+          example: "600123456"
+        salario:
+          type: number
+          format: float
+          minimum: 0
+          example: 2200.50
+        fechaContratacion:
+          type: string
+          format: date
+          example: "2022-03-01"
+        especialidad:
+          type: string
+          example: "Prácticas"
+        activo:
+          type: boolean
+          example: true
+        autoescuelaId:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example: [ 1, 3 ]
+
+    ProfesorOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        nombre:
+          type: string
+          example: "Juan"
+        apellidos:
+          type: string
+          example: "Pérez López"
+        dni:
+          type: string
+          example: "12345678Z"
+        telefono:
+          type: string
+          example: "600123456"
+        especialidad:
+          type: string
+          example: "Prácticas"
+        activo:
+          type: boolean
+          example: true
+
+    ProfesorDetailOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        nombre:
+          type: string
+          example: "Juan"
+        apellidos:
+          type: string
+          example: "Pérez López"
+        dni:
+          type: string
+          example: "12345678Z"
+        telefono:
+          type: string
+          example: "600123456"
+        salario:
+          type: number
+          format: float
+          example: 2200.50
+        fechaContratacion:
+          type: string
+          format: date
+          example: "2022-03-01"
+        especialidad:
+          type: string
+          example: "Prácticas"
+        activo:
+          type: boolean
+          example: true
+        autoescuelas:
+          type: array
+          items:
+            $ref: "#/components/schemas/AutoescuelaOutDto"
+
+    AlumnoInDto:
+      type: object
+      required:
+        - nombre
+        - apellidos
+        - dni
+        - fechaNacimiento
+        - telefono
+        - email
+        - direccion
+        - ciudad
+        - usaGafas
+      properties:
+        nombre:
+          type: string
+          example: "Carlos"
+        apellidos:
+          type: string
+          example: "García López"
+        dni:
+          type: string
+          pattern: "^[0-9]{8}[A-Z]$"
+          example: "12345678Z"
+        fechaNacimiento:
+          type: string
+          format: date
+          example: "2000-05-20"
+        telefono:
+          type: string
+          pattern: "^[0-9]{9}$"
+          example: "600123456"
+        email:
+          type: string
+          format: email
+          example: "carlos@gmail.com"
+        direccion:
+          type: string
+          example: "Calle Mayor 12"
+        ciudad:
+          type: string
+          example: "Zaragoza"
+        usaGafas:
+          type: boolean
+          example: true
+        notaTeorico:
+          type: number
+          format: float
+          minimum: 1
+          maximum: 10
+          example: 7.5
+        autoescuelaId:
+          type: integer
+          format: int64
+          example: 1
+
+    AlumnoOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+        nombre:
+          type: string
+          example: "Carlos"
+        apellidos:
+          type: string
+          example: "García López"
+        dni:
+          type: string
+          example: "12345678Z"
+        ciudad:
+          type: string
+          example: "Zaragoza"
+        notaTeorico:
+          type: number
+          format: float
+          example: 7.5
+
+    AlumnoDetailOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+        nombre:
+          type: string
+          example: "Carlos"
+        apellidos:
+          type: string
+          example: "García López"
+        email:
+          type: string
+          format: email
+          example: "carlos@gmail.com"
+        telefono:
+          type: string
+          example: "600123456"
+        direccion:
+          type: string
+          example: "Calle Mayor 12"
+        ciudad:
+          type: string
+          example: "Zaragoza"
+        dni:
+          type: string
+          example: "12345678Z"
+        fechaNacimiento:
+          type: string
+          format: date
+          example: "2000-05-20"
+        usaGafas:
+          type: boolean
+          example: true
+        notaTeorico:
+          type: number
+          format: float
+          example: 7.5
+        autoescuela:
+          $ref: "#/components/schemas/AutoescuelaOutDto"
+
+    CocheInDto:
+      type: object
+      required:
+        - matricula
+        - marca
+        - modelo
+        - tipoCambio
+        - kilometraje
+        - fechaCompra
+        - precioCompra
+        - disponible
+      properties:
+        matricula:
+          type: string
+          pattern: "^[0-9]{1,4}(?!.*(LL|CH))[BCDFGHJKLMNPRSTVWXYZ]{3}"
+          example: "1234BCD"
+        marca:
+          type: string
+          example: "Seat"
+        modelo:
+          type: string
+          example: "Ibiza"
+        tipoCambio:
+          type: string
+          example: "Manual"
+        kilometraje:
+          type: integer
+          minimum: 1
+          example: 45000
+        fechaCompra:
+          type: string
+          format: date
+          example: "2023-01-10"
+        precioCompra:
+          type: number
+          format: float
+          minimum: 0
+          example: 12000.50
+        disponible:
+          type: boolean
+          example: true
+        autoescuelaId:
+          type: integer
+          format: int64
+          example: 1
+
+    CocheOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        marca:
+          type: string
+          example: "Seat"
+        modelo:
+          type: string
+          example: "Ibiza"
+        tipoCambio:
+          type: string
+          example: "Manual"
+
+    CocheDetailOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        marca:
+          type: string
+          example: "Seat"
+        modelo:
+          type: string
+          example: "Ibiza"
+        tipoCambio:
+          type: string
+          example: "Manual"
+        matricula:
+          type: string
+          example: "1234BCD"
+        kilometraje:
+          type: integer
+          example: 45000
+        precioCompra:
+          type: number
+          format: float
+          example: 12000.50
+        fechaCompra:
+          type: string
+          format: date
+          example: "2023-01-10"
+        disponible:
+          type: boolean
+          example: true
+        autoescuela:
+          $ref: "#/components/schemas/AutoescuelaOutDto"
+
+    MatriculaInDto:
+      type: object
+      required:
+        - modalidad
+        - tipoMatricula
+        - fechaInicio
+        - precio
+        - horasPracticas
+        - horasTeoricas
+        - completada
+        - autoescuelaId
+        - alumnoId
+      properties:
+        modalidad:
+          type: string
+          example: "Presencial"
+        tipoMatricula:
+          type: string
+          example: "B"
+        fechaInicio:
+          type: string
+          format: date
+          example: "2024-01-10"
+        fechaFinal:
+          type: string
+          format: date
+          example: "2024-06-10"
+        precio:
+          type: number
+          format: float
+          minimum: 0
+          example: 850.0
+        horasPracticas:
+          type: integer
+          minimum: 1
+          example: 20
+        horasTeoricas:
+          type: integer
+          minimum: 1
+          example: 15
+        completada:
+          type: boolean
+          example: false
+        observaciones:
+          type: string
+          example: "Pendiente de examen práctico"
+        autoescuelaId:
+          type: integer
+          format: int64
+          example: 1
+        alumnoId:
+          type: integer
+          format: int64
+          example: 3
+
+    MatriculaOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        modalidad:
+          type: string
+          example: "Presencial"
+        tipoMatricula:
+          type: string
+          example: "B"
+        completada:
+          type: boolean
+          example: false
+        autoescuela:
+          $ref: "#/components/schemas/AutoescuelaOutDto"
+        alumno:
+          $ref: "#/components/schemas/AlumnoOutDto"
+
+    MatriculaDetailOutDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        modalidad:
+          type: string
+          example: "Presencial"
+        tipoMatricula:
+          type: string
+          example: "B"
+        horasPracticas:
+          type: integer
+          example: 20
+        horasTeoricas:
+          type: integer
+          example: 15
+        completada:
+          type: boolean
+          example: false
+        observaciones:
+          type: string
+          example: "Pendiente de examen práctico"
+        alumno:
+          $ref: "#/components/schemas/AlumnoOutDto"
+        autoescuela:
+          $ref: "#/components/schemas/AutoescuelaOutDto"
