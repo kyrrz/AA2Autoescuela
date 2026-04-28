@@ -7,6 +7,7 @@ import com.svalero.autoescuela.dto.CocheInDto;
 import com.svalero.autoescuela.dto.CocheOutDto;
 import com.svalero.autoescuela.exception.AutoescuelaNotFoundException;
 import com.svalero.autoescuela.exception.CocheNotFoundException;
+import com.svalero.autoescuela.exception.ValidationException;
 import com.svalero.autoescuela.model.Autoescuela;
 import com.svalero.autoescuela.model.Coche;
 import com.svalero.autoescuela.repository.AutoescuelaRepository;
@@ -181,6 +182,47 @@ public class CocheService {
                 case "precioCompra":
                     coche.setPrecioCompra(((Number) value).floatValue());
                     break;
+                case "disponible":
+                    coche.setDisponible((Boolean) value);
+                    break;
+                case "autoescuelaId":
+                    Long autoescuelaId = ((Number) value).longValue();
+                    Autoescuela autoescuela = autoescuelaRepository.findById(autoescuelaId)
+                            .orElseThrow(AutoescuelaNotFoundException::new);
+                    coche.setAutoescuela(autoescuela);
+                    break;
+            }
+        };
+
+        Coche cocheActualizado = cocheRepository.save(coche);
+        return modelMapper.map(cocheActualizado, CocheDetailOutDto.class);
+    }
+
+    public CocheDetailOutDto patchV2(Long id, Map<String, Object> patch)
+            throws AutoescuelaNotFoundException, CocheNotFoundException {
+
+        Coche coche = cocheRepository.findById(id)
+                .orElseThrow(CocheNotFoundException::new);
+
+        for (Map.Entry<String, Object> entry : patch.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            switch (key) {
+                case "matricula":
+                case "marca":
+                case "modelo":
+                case "tipoCambio":
+                case "fechaCompra":
+                case "precioCompra":
+                    throw new ValidationException("El campo '" + key + "' no puede cambiarse");
+                case "kilometraje":
+                    int nuevoKilometraje = Integer.parseInt(value.toString());
+                    if (nuevoKilometraje < coche.getKilometraje()) {
+                        throw new ValidationException("El campo '" + key + "' no se puede reducir");
+                    }
+                    coche.setKilometraje(((Number) value).intValue());
+                    break;
+
                 case "disponible":
                     coche.setDisponible((Boolean) value);
                     break;

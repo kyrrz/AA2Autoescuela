@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/coches")
+@RequestMapping("/api")
 public class CocheController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class CocheController {
     @Autowired
     private AutoescuelaService autoescuelaService;
 
-    @GetMapping("")
+    @GetMapping("/v1/coches")
     public ResponseEntity<List<CocheOutDto>> getAll(
             @RequestParam(required = false) String marca,
             @RequestParam(required = false) String modelo,
@@ -42,12 +42,12 @@ public class CocheController {
         return ResponseEntity.ok(cod);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/v1/coches/{id}")
     public ResponseEntity<CocheDetailOutDto> getCocheById(@PathVariable long id) throws CocheNotFoundException {
         return ResponseEntity.ok(cocheService.findById(id));
     }
 
-    @PostMapping("")
+    @PostMapping("/v1/coches")
     public ResponseEntity<CocheDetailOutDto> addCoche(@Valid  @RequestBody CocheInDto cocheInDto) throws AutoescuelaNotFoundException {
 
         AutoescuelaDetailOutDto autoescuelaDetailOutDto = autoescuelaService.findById(cocheInDto.getAutoescuelaId());
@@ -56,7 +56,7 @@ public class CocheController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cocheDetailOutDto);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/v1/coches/{id}")
     public ResponseEntity<CocheDetailOutDto> modifyCoche(@Valid @RequestBody CocheInDto cocheInDto, @PathVariable long id) throws CocheNotFoundException, AutoescuelaNotFoundException {
 
         AutoescuelaDetailOutDto autoescuelaDetailOutDto = autoescuelaService.findById(cocheInDto.getAutoescuelaId());
@@ -65,17 +65,26 @@ public class CocheController {
         return ResponseEntity.ok(cocheDetailOutDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/v1/coches/{id}")
     public ResponseEntity<Void> deleteCoche(@PathVariable long id) throws CocheNotFoundException {
         cocheService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/v1/coches/{id}")
     public ResponseEntity<CocheDetailOutDto> patchCoche(@PathVariable Long id, @RequestBody Map<String, Object> patch) throws CocheNotFoundException, AutoescuelaNotFoundException {
 
         CocheDetailOutDto cocheActualizado = cocheService.patch(id, patch);
+        return ResponseEntity.ok(cocheActualizado);
+    }
+
+    /* Añadido un patch más robusto que no permite cambiar campos que son inmutables en un coche
+    * y lógica para no poder reducir el kilometraje del coche, ya que este campo nunca podría reducirse*/
+    @PatchMapping("/v2/coches/{id}")
+    public ResponseEntity<CocheDetailOutDto> patchCocheV2(@PathVariable Long id, @RequestBody Map<String, Object> patch) throws CocheNotFoundException, AutoescuelaNotFoundException {
+
+        CocheDetailOutDto cocheActualizado = cocheService.patchV2(id, patch);
         return ResponseEntity.ok(cocheActualizado);
     }
 

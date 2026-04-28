@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/autoescuelas")
+@RequestMapping("/api")
 public class AutoescuelaController {
 
     @Autowired
     private AutoescuelaService autoescuelaService;
 
-    @GetMapping("")
+    @GetMapping("/v1/autoescuelas")
     public ResponseEntity<List<AutoescuelaOutDto>> getAll(
             @RequestParam(required = false) String ciudad,
             @RequestParam(required = false) Float minRating,
@@ -35,40 +35,40 @@ public class AutoescuelaController {
         return ResponseEntity.ok(autoescuelaOutDtos);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/v1/autoescuelas/{id}")
     public ResponseEntity<AutoescuelaDetailOutDto> getAutoescuelaById(@PathVariable long id) throws AutoescuelaNotFoundException {
         return ResponseEntity.ok(autoescuelaService.findById(id));
     }
 
-    @GetMapping("/{id}/profesores")
+    @GetMapping("/v1/autoescuelas/{id}/profesores")
     public ResponseEntity<List<ProfesorOutDto>> getProfesoresByAutoescuelaId(@PathVariable long id) throws AutoescuelaNotFoundException {
         List<ProfesorOutDto> profesores = autoescuelaService.getProfesores(id);
 
         return ResponseEntity.ok(profesores);
     }
 
-    @GetMapping("/{id}/coches")
+    @GetMapping("/v1/autoescuelas/{id}/coches")
     public ResponseEntity<List<CocheOutDto>> getCochesByAutoescuelaId(@PathVariable long id) throws AutoescuelaNotFoundException {
         List<CocheOutDto> coches = autoescuelaService.getCoches(id);
 
         return ResponseEntity.ok(coches);
     }
 
-    @GetMapping("/{id}/matriculas")
+    @GetMapping("/v1/autoescuelas/{id}/matriculas")
     public ResponseEntity<List<MatriculaOutDto>> getMatriculasByAutoescuelaId(@PathVariable long id) throws AutoescuelaNotFoundException {
         List<MatriculaOutDto> matricula = autoescuelaService.getMatriculas(id);
 
         return ResponseEntity.ok(matricula);
     }
 
-    @GetMapping("/{id}/matriculas/completadas")
+    @GetMapping("/v1/autoescuelas/{id}/matriculas/completadas")
     public ResponseEntity<List<MatriculaOutDto>> getMatriculasCompletas(@PathVariable Long id) throws AutoescuelaNotFoundException {
 
         return ResponseEntity.ok(
                 autoescuelaService.getMatriculasCompletas(id)
         );
     }
-    @GetMapping("/{id}/alumnos/suspensos")
+    @GetMapping("/v1/autoescuelas/{id}/alumnos/suspensos")
     public ResponseEntity<List<AlumnoOutDto>> getAlumnosSuspensosByAutoescuelaId(@PathVariable long id) throws AutoescuelaNotFoundException {
         return ResponseEntity.ok(autoescuelaService.getAlumnosSuspensos(id));
     }
@@ -76,25 +76,34 @@ public class AutoescuelaController {
 
 
 
-    @PostMapping("")
+    @PostMapping("/v1/autoescuelas")
     public ResponseEntity<AutoescuelaDetailOutDto> addAutoescuela(@Valid  @RequestBody AutoescuelaInDto autoescuelaInDto){
         AutoescuelaDetailOutDto a = autoescuelaService.add(autoescuelaInDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(a);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/v1/autoescuelas/{id}")
     public ResponseEntity<AutoescuelaDetailOutDto> modifyAutoescuela(@Valid @RequestBody AutoescuelaInDto autoescuelaInDto, @PathVariable long id) throws AutoescuelaNotFoundException {
         AutoescuelaDetailOutDto a = autoescuelaService.modify(id, autoescuelaInDto);
         return ResponseEntity.ok(a);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/v1/autoescuelas/{id}")
     public ResponseEntity<Void> deleteAutoescuela(@PathVariable long id) throws AutoescuelaNotFoundException {
         autoescuelaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}")
+    /* En vez de borrar la autoescuela, utilizaremos el campo active que tiene para ponerla inactiva
+    y después quitamos todos los coches, profesores y alumnos que haya en ella.
+     Las matriculas he decidido no quitarlas, ya que para el hacer papeles para cambiar de autoescuela
+     se necesitarian tener para el translado*/
+    @DeleteMapping("/v2/autoescuelas/{id}")
+    public ResponseEntity<Void> deleteAutoescuelaV2(@PathVariable long id) throws AutoescuelaNotFoundException {
+        autoescuelaService.deleteV2(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/v1/autoescuelas/{id}")
     public ResponseEntity<AutoescuelaDetailOutDto> patchAutoescuela(@Valid @PathVariable Long id, @RequestBody Map<String, Object> patch) throws AutoescuelaNotFoundException, BadRequestException {
         AutoescuelaDetailOutDto autoescuelaPatch = autoescuelaService.patch(id, patch);
         return ResponseEntity.ok(autoescuelaPatch);

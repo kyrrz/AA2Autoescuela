@@ -48,6 +48,32 @@ public class AutoescuelaService {
         autoescuelaRepository.delete(a);
     }
 
+    public void deleteV2(long id) throws AutoescuelaNotFoundException {
+        Autoescuela autoescuela = autoescuelaRepository.findById(id)
+                .orElseThrow(AutoescuelaNotFoundException::new);
+
+        List<Profesor> profesores = profesorRepository.findProfesoresByAutoescuelaId(id);
+        for (Profesor profesor : profesores) {
+            profesor.getAutoescuelas().remove(autoescuela);
+            profesorRepository.save(profesor);
+        }
+
+        List<Alumno> alumnos = alumnoRepository.findAllByAutoescuelaId(id);
+        for (Alumno alumno : alumnos) {
+            alumno.setAutoescuela(null);
+            alumnoRepository.save(alumno);
+        }
+
+        List<Coche> coches = cocheRepository.findCochesByAutoescuelaId(id);
+        for (Coche coche : coches) {
+            coche.setAutoescuela(null);
+            cocheRepository.save(coche);
+        }
+
+        autoescuela.setActiva(false);
+        autoescuelaRepository.save(autoescuela);
+    }
+
     public List<AutoescuelaOutDto> findAll(){
         List<Autoescuela> autoescuelas = autoescuelaRepository.findAll();
         List<AutoescuelaOutDto> aod =  modelMapper.map(autoescuelas, new TypeToken<List<AutoescuelaOutDto>>() {}.getType());

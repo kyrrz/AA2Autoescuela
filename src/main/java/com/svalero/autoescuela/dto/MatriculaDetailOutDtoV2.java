@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MatriculaDetailOutDto
+public class MatriculaDetailOutDtoV2
 {
 
     private long id;
@@ -21,5 +19,7 @@ public class MatriculaDetailOutDto
     private AlumnoOutDto alumno;
     private AutoescuelaOutDto autoescuela;
     private String observaciones;
+    private String metodoPago;
+    private String codigoDescuento;
 
 }

@@ -2,6 +2,8 @@ package com.svalero.autoescuela.repository;
 
 
 import com.svalero.autoescuela.model.Alumno;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +15,9 @@ import java.util.List;
 @Repository
 public interface AlumnoRepository extends CrudRepository<Alumno, Long>, JpaSpecificationExecutor<Alumno> {
     List<Alumno> findAll();
-
+    List<Alumno> findAllByAutoescuelaId(Long id);
+    Page<Alumno> findByApellidos(String apellidos, Pageable pageable);
+    Page<Alumno> findAll(Pageable pageable);
     @NativeQuery(value = "SELECT * FROM alumnos a WHERE a.autoescuela_id = :autoescuelaId AND a.nota_teorico < 5")
     List<Alumno> findAlumnosSuspensosByAutoescuela(@Param("autoescuelaId") Long autoescuelaId);
 

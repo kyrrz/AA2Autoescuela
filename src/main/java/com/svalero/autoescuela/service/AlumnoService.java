@@ -10,9 +10,12 @@ import com.svalero.autoescuela.repository.AlumnoRepository;
 import com.svalero.autoescuela.repository.AutoescuelaRepository;
 import com.svalero.autoescuela.specification.AlumnoSpecification;
 
+import org.jspecify.annotations.Nullable;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -165,6 +168,7 @@ public class AlumnoService {
         return modelMapper.map(alumnos, new TypeToken<List<AlumnoOutDto>>() {}.getType());
     }
 
+
     public AlumnoDetailOutDto findById(long id) throws AlumnoNotFoundException{
         return alumnoRepository.findById(id).map(alumno -> modelMapper.map(alumno, AlumnoDetailOutDto.class))
                 .orElseThrow(AlumnoNotFoundException::new);
@@ -245,5 +249,16 @@ public class AlumnoService {
         };
         Alumno alumnoPatch = alumnoRepository.save(alumno);
         return modelMapper.map(alumnoPatch, AlumnoDetailOutDto.class);
+    }
+
+    public Page<AlumnoOutDto> findByFiltrosV2(String apellido, Pageable pageable) {
+        Page<Alumno> alumnosPage;
+
+        if (apellido != null && !apellido.trim().isEmpty()) {
+            alumnosPage = alumnoRepository.findByApellidos(apellido, pageable);
+        } else {
+            alumnosPage = alumnoRepository.findAll(pageable);
+        }
+        return alumnosPage.map(alumno -> modelMapper.map(alumno, AlumnoOutDto.class));
     }
 }

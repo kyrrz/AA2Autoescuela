@@ -4,6 +4,7 @@ import com.svalero.autoescuela.dto.*;
 import com.svalero.autoescuela.exception.AlumnoNotFoundException;
 import com.svalero.autoescuela.exception.AutoescuelaNotFoundException;
 import com.svalero.autoescuela.exception.MatriculaNotFoundException;
+import com.svalero.autoescuela.exception.ValidationException;
 import com.svalero.autoescuela.model.Alumno;
 import com.svalero.autoescuela.model.Autoescuela;
 import com.svalero.autoescuela.model.Coche;
@@ -214,6 +215,20 @@ public class MatriculaService {
         Matricula matriculaSaved = matriculaRepository.save(matriculaAnterior);
 
         return modelMapper.map(matriculaSaved, MatriculaDetailOutDto.class);
+    }
+
+    public MatriculaDetailOutDtoV2 modifyV2(long id, MatriculaInDtoV2 dto)
+            throws MatriculaNotFoundException, ValidationException {
+        Matricula matriculaAnterior = matriculaRepository.findById(id)
+                .orElseThrow(MatriculaNotFoundException::new);
+
+        modelMapper.map(dto, matriculaAnterior);
+        if (dto.isCompletada() && "TRANSFERENCIA".equals(dto.getMetodoPago())) {
+            throw new ValidationException("Las matrículas pagadas por transferencia no pueden marcarse como completadas hasta que el banco confirme el ingreso.");
+        }
+
+        Matricula matriculaGuardada = matriculaRepository.save(matriculaAnterior);
+        return modelMapper.map(matriculaGuardada, MatriculaDetailOutDtoV2.class);
     }
 
     public MatriculaDetailOutDto patch(Long id, Map<String, Object> patch)
