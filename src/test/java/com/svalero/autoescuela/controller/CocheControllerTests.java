@@ -56,7 +56,7 @@ public class CocheControllerTests {
 
         when(cocheService.findByFiltros(null, null, null)).thenReturn(cocheOutDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/coches")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/coches")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -84,7 +84,7 @@ public class CocheControllerTests {
 
         when(cocheService.findById(1L)).thenReturn(dto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/coches/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/coches/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -100,7 +100,7 @@ public class CocheControllerTests {
     // 400
     @Test
     public void testFindById_badRequest() throws Exception {
-        mockMvc.perform(get("/coches/a"))
+        mockMvc.perform(get("/api/v1/coches/a"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -110,7 +110,7 @@ public class CocheControllerTests {
         when(cocheService.findById(999L))
                 .thenThrow(new CocheNotFoundException());
 
-        mockMvc.perform(get("/coches/999"))
+        mockMvc.perform(get("/api/v1/coches/999"))
                 .andExpect(status().isNotFound());
     }
 
@@ -137,7 +137,7 @@ public class CocheControllerTests {
         when(autoescuelaService.findById(1L)).thenReturn(autoescuelaDetailOutDto);
         when(cocheService.add(inDto, autoescuelaDetailOutDto)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/coches")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/coches")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -159,7 +159,7 @@ public class CocheControllerTests {
         inDto.setMatricula("");
         inDto.setMarca("Seat");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/coches")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/coches")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -175,7 +175,7 @@ public class CocheControllerTests {
 
         when(autoescuelaService.findById(999L)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/coches")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/coches")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -205,7 +205,7 @@ public class CocheControllerTests {
         when(autoescuelaService.findById(1L)).thenReturn(autoescuelaDetailOutDto);
         when(cocheService.modify(1L, inDto, autoescuelaDetailOutDto)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/coches/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/coches/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -234,7 +234,7 @@ public class CocheControllerTests {
         when(cocheService.modify(eq(999L), eq(inDto), any(AutoescuelaDetailOutDto.class)))
                 .thenThrow(new CocheNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/coches/999")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/coches/999")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -248,7 +248,7 @@ public class CocheControllerTests {
         inDto.setMatricula("");
         inDto.setMarca("Seat");
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/coches/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/coches/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -262,7 +262,7 @@ public class CocheControllerTests {
     public void testDelete_ok() throws Exception {
         doNothing().when(cocheService).delete(1L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/coches/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/coches/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNoContent());
     }
@@ -272,7 +272,7 @@ public class CocheControllerTests {
     public void testDelete_notFound() throws Exception {
         doThrow(new CocheNotFoundException()).when(cocheService).delete(999L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/coches/999")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/coches/999")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
     }
@@ -280,7 +280,7 @@ public class CocheControllerTests {
     // 400
     @Test
     public void testDelete_badRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/coches/abc")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/coches/abc")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
     }
@@ -303,7 +303,7 @@ public class CocheControllerTests {
 
         when(cocheService.patch(1L, patch)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/coches/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/coches/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -325,7 +325,7 @@ public class CocheControllerTests {
 
         when(cocheService.patch(999L, patch)).thenThrow(new CocheNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/coches/999")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/coches/999")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -337,7 +337,7 @@ public class CocheControllerTests {
     public void testPatch_badRequest() throws Exception {
 
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/coches/abc")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/coches/abc")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content("{}"))

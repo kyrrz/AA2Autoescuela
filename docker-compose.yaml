@@ -1,0 +1,44 @@
+name: autoescuela_aa2
+services:
+  autoescuela-db:
+    image: mariadb:11.3.2
+    container_name: autoescuela-db-2-prod
+    environment:
+      MYSQL_PORT: 3306
+      MYSQL_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MYSQL_USER: $MARIADB_USER
+      MYSQL_PASSWORD: $AUTOESCUELA_DATABASE_PASSWORD
+      MYSQL_DATABASE: $MARIADB_DATABASE
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - network_autoescuela
+    volumes:
+      - db_data:/var/lib/mysql
+
+  autoescuela-api:
+    image: autoescuela-api:latest
+    container_name: autoescuela-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      autoescuela-db:
+        condition: service_healthy
+    environment:
+      DB_HOST: "autoescuela-db"
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      AUTOESCUELA_DATABASE_PASSWORD: $AUTOESCUELA_DATABASE_PASSWORD
+      SPRING_PROFILES_ACTIVE: $PROFILE
+    networks:
+      - network_autoescuela
+networks:
+  network_autoescuela:
+    driver: bridge
+volumes:
+  db_data:

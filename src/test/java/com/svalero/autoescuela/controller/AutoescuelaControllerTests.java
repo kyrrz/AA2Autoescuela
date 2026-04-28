@@ -57,7 +57,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.findByFiltros(null,null,null)).thenReturn(autoescuelaOutDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -74,7 +74,7 @@ public class AutoescuelaControllerTests {
         // 400
     @Test
     public void testGetAll_badRequest() throws Exception {
-        mockMvc.perform(get("/autoescuelas")
+        mockMvc.perform(get("/api/v1/autoescuelas")
                         .param("minRating", "abc"))
                 .andExpect(status().isBadRequest());
     }
@@ -91,7 +91,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.findById(1L)).thenReturn(dto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/1")
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -106,7 +106,7 @@ public class AutoescuelaControllerTests {
         // 400
     @Test
     public void testFindById_badRequest() throws Exception {
-        mockMvc.perform(get("/autoescuelas/a"))
+        mockMvc.perform(get("/api/v1/autoescuelas/a"))
                 .andExpect(status().isBadRequest());
     }
         // 404
@@ -115,7 +115,7 @@ public class AutoescuelaControllerTests {
         when(autoescuelaService.findById(1L))
                 .thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(get("/autoescuelas/1"))
+        mockMvc.perform(get("/api/v1/autoescuelas/1"))
                 .andExpect(status().isNotFound());
     }
 
@@ -133,7 +133,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.add(inDto)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/autoescuelas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/autoescuelas")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -156,7 +156,7 @@ public class AutoescuelaControllerTests {
         inDto.setDireccion("Calle 123");
 
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/autoescuelas").contentType(MediaType.APPLICATION_JSON_VALUE)
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/autoescuelas").contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
                 .andExpect(status().isBadRequest());
@@ -175,7 +175,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.modify(anyLong(), any(AutoescuelaInDto.class))).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/autoescuelas/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/autoescuelas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -198,7 +198,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.modify(2L, inDto)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/autoescuelas/2")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/autoescuelas/2")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -212,7 +212,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.modify(1L, inDto)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/autoescuelas/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/autoescuelas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -229,7 +229,7 @@ public class AutoescuelaControllerTests {
 
         doNothing().when(autoescuelaService).delete(1L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/autoescuelas/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/autoescuelas/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNoContent());
 
@@ -240,7 +240,7 @@ public class AutoescuelaControllerTests {
 
         doThrow(new AutoescuelaNotFoundException()).when(autoescuelaService).delete(99L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/autoescuelas/99")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/autoescuelas/99")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
 
@@ -249,7 +249,7 @@ public class AutoescuelaControllerTests {
     @Test
     public void testDelete_badRequest() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/autoescuelas/aa")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/autoescuelas/aa")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
@@ -273,7 +273,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.patch(1L, patch)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/autoescuelas/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/autoescuelas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -299,7 +299,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.patch(99L, patch)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/autoescuelas/99")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/autoescuelas/99")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -317,7 +317,7 @@ public class AutoescuelaControllerTests {
         when(autoescuelaService.findById(1L)).thenThrow(new AutoescuelaNotFoundException());
         when(autoescuelaService.patch(1L, patch)).thenThrow(new BadRequestException());
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/autoescuelas/1")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/autoescuelas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -343,7 +343,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getProfesores(1L)).thenReturn(outDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/1/profesores")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/1/profesores")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -367,7 +367,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getProfesores(99L)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/99/profesores")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/99/profesores")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
     }
@@ -380,7 +380,7 @@ public class AutoescuelaControllerTests {
         dto.setNombre("Autoescuela Test");
         dto.setDireccion("Calle 123");
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/a/profesores")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/a/profesores")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
@@ -402,7 +402,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getCoches(1L)).thenReturn(outDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/1/coches")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/1/coches")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -427,7 +427,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getCoches(99L)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/99/coches")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/99/coches")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
 
@@ -439,7 +439,7 @@ public class AutoescuelaControllerTests {
         dto.setNombre("Autoescuela Test");
         dto.setDireccion("Calle 123");
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/a/coches")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/a/coches")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
     }
@@ -462,7 +462,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getMatriculas(1L)).thenReturn(outDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/1/matriculas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/1/matriculas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -487,7 +487,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getMatriculas(99L)).thenThrow(new AutoescuelaNotFoundException());
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/99/matriculas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/99/matriculas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound())
                 .andReturn();
@@ -502,7 +502,7 @@ public class AutoescuelaControllerTests {
         dto.setNombre("Autoescuela Test");
         dto.setDireccion("Calle 123");
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/a/matriculas")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/a/matriculas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andReturn();
@@ -535,7 +535,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getMatriculasCompletas(1L)).thenReturn(outDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/1/matriculas/completadas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/1/matriculas/completadas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -572,7 +572,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getMatriculasCompletas(99L)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/99/matriculas/completadas")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/99/matriculas/completadas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
 
@@ -580,7 +580,7 @@ public class AutoescuelaControllerTests {
     // 400
     @Test
     public void testFindMatriculasCompletadasById_badRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/a/matriculas/completadas")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/a/matriculas/completadas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
@@ -602,7 +602,7 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getAlumnosSuspensos(1L)).thenReturn(outDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/1/alumnos/suspensos")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/1/alumnos/suspensos")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -626,14 +626,14 @@ public class AutoescuelaControllerTests {
 
         when(autoescuelaService.getAlumnosSuspensos(99L)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/99/alumnos/suspensos")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/99/alumnos/suspensos")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
     }
     // 400
     @Test
     public void testFindAlumnosSuspensosById_badRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/autoescuelas/a/alumnos/suspensos")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/autoescuelas/a/alumnos/suspensos")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
     }

@@ -1,0 +1,2148 @@
+{
+  "info": {
+    "_postman_id": "bd2f83f4-5783-4911-a609-0ed63231d8f7",
+    "name": "AA2_Autoescuela",
+    "description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" width=\"2162\" height=\"1530\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "44950745",
+    "_collection_link": "https://go.postman.co/collection/44950745-bd2f83f4-5783-4911-a609-0ed63231d8f7?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Autoescuela",
+      "item": [
+        {
+          "name": "/autoescuelas",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Autoescuela SV\",\r\n  \"direccion\": \"Avenida Diagonal 123\",\r\n  \"ciudad\": \"Zaragoza\",\r\n  \"telefono\": \"934567890\",\r\n  \"email\": \"contacto@ruedasfelices.com\",\r\n  \"capacidad\": 20,\r\n  \"rating\": 4.8,\r\n  \"fechaApertura\": \"2019-06-20\",\r\n  \"activa\": true,\r\n  \"latitud\": 100,\r\n  \"longitud\": 100\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas?ciudad=Madrid&rating=4.7&activa=true",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas"
+              ],
+              "query": [
+                {
+                  "key": "ciudad",
+                  "value": "Madrid"
+                },
+                {
+                  "key": "rating",
+                  "value": "4.7"
+                },
+                {
+                  "key": "activa",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Autoescuela Svalero 4\",\r\n  \"direccion\": \"Avenida Diagonal 123\",\r\n  \"ciudad\": \"Zaragoza\",\r\n  \"telefono\": \"934567890\",\r\n  \"email\": \"contacto@ruedasfelices.com\",\r\n  \"capacidad\": 20,\r\n  \"rating\": 4.8,\r\n  \"fechaApertura\": \"2019-06-20\",\r\n  \"activa\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Auto Escuelas Sanva Lero\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Alumno",
+      "item": [
+        {
+          "name": "/alumnos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", () => {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Estructura correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"alumnoId\", response.id);\r",
+                  "\r",
+                  "    pm.expect(response).to.have.property('id');\r",
+                  "    pm.expect(response).to.have.property('nombre');\r",
+                  "    pm.expect(response).to.have.property('apellidos');\r",
+                  "    pm.expect(response).to.have.property('email');\r",
+                  "    pm.expect(response).to.have.property('telefono');\r",
+                  "    pm.expect(response).to.have.property('direccion');\r",
+                  "    pm.expect(response).to.have.property('ciudad');\r",
+                  "    pm.expect(response).to.have.property('dni');\r",
+                  "    pm.expect(response).to.have.property('fechaNacimiento');\r",
+                  "    pm.expect(response).to.have.property('usaGafas');\r",
+                  "    pm.expect(response).to.have.property('notaTeorico');\r",
+                  "    pm.expect(response).to.have.property('autoescuela');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Creado correctamente\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.nombre).to.eql('Alvaro')\r",
+                  "    pm.expect(response.apellidos).to.eql('Reyes de Diego');\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n    {\r\n  \"nombre\": \"{{nombreAlumno}}\",\r\n  \"apellidos\": \"{{apellidosAlumno}}\",\r\n  \"dni\": \"{{DNI}}\",\r\n  \"fechaNacimiento\": \"{{fechaNacimiento}}\",\r\n  \"telefono\": \"{{telefonoAlumno}}\",\r\n  \"email\": \"{{emailAlumno}}\",\r\n  \"direccion\": \"{{direccionAlumno}}\",\r\n  \"ciudad\": \"{{ciudadAlumno}}\",\r\n  \"usaGafas\": {{usaGafas}},\r\n  \"notaTeorico\": {{notaTeorico}},\r\n  \"autoescuelaId\": {{autoescuelaId}}\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400 for validation error\", () => {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('errors')\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Validation error\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n    {\r\n  \"nombre\": \"{{nombreAlumno}}\",\r\n  \"apellidos\": \"{{apellidosAlumno}}\",\r\n  \"dni\": \"1234\",\r\n  \"fechaNacimiento\": \"{{fechaNacimiento}}\",\r\n  \"telefono\": \"{{telefonoAlumno}}\",\r\n  \"email\": \"{{emailAlumno}}\",\r\n  \"direccion\": \"{{direccionAlumno}}\",\r\n  \"ciudad\": \"{{ciudadAlumno}}\",\r\n  \"usaGafas\": {{usaGafas}},\r\n  \"notaTeorico\": {{notaTeorico}},\r\n  \"autoescuelaId\": {{autoescuelaId}}\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos user2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", () => {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Estructura correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"alumnoIdBorrar\", response.id);\r",
+                  "\r",
+                  "    pm.expect(response).to.have.property('id');\r",
+                  "    pm.expect(response).to.have.property('nombre');\r",
+                  "    pm.expect(response).to.have.property('apellidos');\r",
+                  "    pm.expect(response).to.have.property('email');\r",
+                  "    pm.expect(response).to.have.property('telefono');\r",
+                  "    pm.expect(response).to.have.property('direccion');\r",
+                  "    pm.expect(response).to.have.property('ciudad');\r",
+                  "    pm.expect(response).to.have.property('dni');\r",
+                  "    pm.expect(response).to.have.property('fechaNacimiento');\r",
+                  "    pm.expect(response).to.have.property('usaGafas');\r",
+                  "    pm.expect(response).to.have.property('notaTeorico');\r",
+                  "    pm.expect(response).to.have.property('autoescuela');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Creado correctamente\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.nombre).to.eql('Pedro')\r",
+                  "    pm.expect(response.apellidos).to.eql('Pica Piedra');\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n\"nombre\": \"{{nombreAlumno2}}\",\r\n  \"apellidos\": \"{{apellidosAlumno2}}\",\r\n  \"dni\": \"{{DNI}}\",\r\n  \"fechaNacimiento\": \"{{fechaNacimiento}}\",\r\n  \"telefono\": \"{{telefonoAlumno}}\",\r\n  \"email\": \"{{emailAlumno}}\",\r\n  \"direccion\": \"{{direccionAlumno}}\",\r\n  \"ciudad\": \"{{ciudadAlumno}}\",\r\n  \"usaGafas\": {{usaGafas}},\r\n  \"notaTeorico\": {{notaTeorico2}},\r\n  \"autoescuelaId\": {{autoescuelaId}}\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos (V2)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"v2 tiene estructura de paginación correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    \r",
+                  "    pm.expect(response).to.have.property('content');\r",
+                  "    pm.expect(response).to.have.property('pageable');\r",
+                  "    pm.expect(response).to.have.property('totalElements');\r",
+                  "\r",
+                  "    pm.expect(response.content).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"El filtrado por apellido funciona\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    const apellidoBuscado = pm.collectionVariables.get(\"apellidosAlumno\");\r",
+                  "    \r",
+                  "\r",
+                  "    response.content.forEach((alumno) => {\r",
+                  "        pm.expect(alumno.apellidos).to.include(apellidoBuscado);\r",
+                  "    });\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Metadatos de paginación coherentes\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.numberOfElements).to.equal(response.content.length);\r",
+                  "    pm.expect(response.size).to.be.a('number');\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v2/alumnos?apellido={{apellidosAlumno}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "alumnos"
+              ],
+              "query": [
+                {
+                  "key": "apellido",
+                  "value": "{{apellidosAlumno}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"v1 devuelve una lista con datos correctos\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    \r",
+                  "    pm.expect(response).to.be.an('array');\r",
+                  "    pm.expect(response.length).to.be.at.least(1);\r",
+                  "\r",
+                  "    const primerAlumno = response[0];\r",
+                  "    pm.expect(primerAlumno).to.have.all.keys('id', 'nombre', 'apellidos', 'dni', 'ciudad', 'notaTeorico');\r",
+                  "    pm.expect(primerAlumno.nombre).to.be.a('string');\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Estructura correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"alumnoId\", response.id);\r",
+                  "\r",
+                  "    pm.expect(response).to.have.property('id');\r",
+                  "    pm.expect(response).to.have.property('nombre');\r",
+                  "    pm.expect(response).to.have.property('apellidos');\r",
+                  "    pm.expect(response).to.have.property('email');\r",
+                  "    pm.expect(response).to.have.property('telefono');\r",
+                  "    pm.expect(response).to.have.property('direccion');\r",
+                  "    pm.expect(response).to.have.property('ciudad');\r",
+                  "    pm.expect(response).to.have.property('dni');\r",
+                  "    pm.expect(response).to.have.property('fechaNacimiento');\r",
+                  "    pm.expect(response).to.have.property('usaGafas');\r",
+                  "    pm.expect(response).to.have.property('notaTeorico');\r",
+                  "    pm.expect(response).to.have.property('autoescuela');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Los datos se han actualizado correctamente\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.usaGafas).to.eql(false);\r",
+                  "    pm.expect(response.nombre).to.eql(\"Alvaro\"); \r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"nombre\": \"{{nombreAlumno}}\",\r\n  \"apellidos\": \"{{apellidosAlumno}}\",\r\n  \"dni\": \"{{DNI}}\",\r\n  \"fechaNacimiento\": \"{{fechaNacimiento}}\",\r\n  \"telefono\": \"{{telefonoAlumno}}\",\r\n  \"email\": \"{{emailAlumno}}\",\r\n  \"direccion\": \"{{direccionAlumno}}\",\r\n  \"ciudad\": \"{{ciudadAlumno}}\",\r\n  \"usaGafas\": false,\r\n  \"notaTeorico\": {{notaTeorico}},\r\n  \"autoescuelaId\": {{autoescuelaId}}\r\n}\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoId}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is correct\", () => {\r",
+                  "    pm.expect(pm.response.code).to.be.eql(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Alumno no encontrado\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"nombre\": \"{{nombreAlumno}}\",\r\n  \"apellidos\": \"{{apellidosAlumno}}\",\r\n  \"dni\": \"{{DNI}}\",\r\n  \"fechaNacimiento\": \"{{fechaNacimiento}}\",\r\n  \"telefono\": \"{{telefonoAlumno}}\",\r\n  \"email\": \"{{emailAlumno}}\",\r\n  \"direccion\": \"{{direccionAlumno}}\",\r\n  \"ciudad\": \"{{ciudadAlumno}}\",\r\n  \"usaGafas\": false,\r\n  \"notaTeorico\": {{notaTeorico}},\r\n  \"autoescuelaId\": {{autoescuelaId}}\r\n}\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/9999",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "9999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is correct\", () => {\r",
+                  "    pm.expect(pm.response.code).to.be.eql(400);\r",
+                  "});\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('errors')\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Validation error\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "\r\n{\r\n  \"nombre\": \"{{nombreAlumno}}\",\r\n  \"apellidos\": \"{{apellidosAlumno}}\",\r\n  \"dni\": \"{{DNI}}\",\r\n  \"fechaNacimiento\": \"{{fechaNacimiento}}\",\r\n  \"telefono\": \"{{telefonoAlumno}}\",\r\n  \"email\": \"alvarito\",\r\n  \"direccion\": \"{{direccionAlumno}}\",\r\n  \"ciudad\": \"{{ciudadAlumno}}\",\r\n  \"usaGafas\": false,\r\n  \"notaTeorico\": {{notaTeorico}},\r\n  \"autoescuelaId\": {{autoescuelaId}}\r\n}\r\n\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoId}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos?params",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Estructura de lista correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.be.an('array');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Los filtros aplicados son correctos\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "const ciudadE = pm.collectionVariables.get(\"ciudadAlumno\");\r",
+                  "const nombreE = pm.collectionVariables.get(\"nombreAlumno2\");\r",
+                  "\r",
+                  "response.forEach((alumno) => {\r",
+                  "    pm.expect(alumno.ciudad).to.eql(ciudadE);\r",
+                  "    pm.expect(alumno.nombre).to.eql(nombreE);\r",
+                  "    pm.expect(Number(alumno.notaTeorico)).to.be.at.least(2);\r",
+                  "});\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validación de tipos de datos en la respuesta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    if (response.length > 0) {\r",
+                  "        const alumno = response[0];\r",
+                  "        pm.expect(alumno.id).to.be.a('number');\r",
+                  "        pm.expect(alumno.nombre).to.be.a('string');\r",
+                  "        pm.expect(alumno.notaTeorico).to.be.a('number');\r",
+                  "    }\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos?ciudad={{ciudadAlumno}}&nombre={{nombreAlumno2}}&usaGafas={{usaGafas}}&minNotaTeorico=2",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos"
+              ],
+              "query": [
+                {
+                  "key": "ciudad",
+                  "value": "{{ciudadAlumno}}"
+                },
+                {
+                  "key": "nombre",
+                  "value": "{{nombreAlumno2}}"
+                },
+                {
+                  "key": "usaGafas",
+                  "value": "{{usaGafas}}"
+                },
+                {
+                  "key": "minNotaTeorico",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos/id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "pm.test(\"Estructura correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    \r",
+                  "    pm.collectionVariables.set(\"alumnoId\", response.id);\r",
+                  "\r",
+                  "    pm.expect(response).to.have.property('id');\r",
+                  "    pm.expect(response).to.have.property('nombre');\r",
+                  "    pm.expect(response).to.have.property('apellidos');\r",
+                  "    pm.expect(response).to.have.property('email');\r",
+                  "    pm.expect(response).to.have.property('telefono');\r",
+                  "    pm.expect(response).to.have.property('direccion');\r",
+                  "    pm.expect(response).to.have.property('ciudad');\r",
+                  "    pm.expect(response).to.have.property('dni');\r",
+                  "    pm.expect(response).to.have.property('fechaNacimiento');\r",
+                  "    pm.expect(response).to.have.property('usaGafas');\r",
+                  "    pm.expect(response).to.have.property('notaTeorico');\r",
+                  "    pm.expect(response).to.have.property('autoescuela');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Nota actualizada\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.nombre).to.eql('Alvaro')\r",
+                  "    pm.expect(response.apellidos).to.eql('Gonzalez');\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"apellidos\": \"Gonzalez\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoId}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos/id (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is correct\", () => {\r",
+                  "    pm.expect(pm.response.code).to.be.eql(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Alumno no encontrado\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"apellidos\": \"Gonzalez\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/909999",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "909999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos/id (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is correct\", () => {\r",
+                  "    pm.expect(pm.response.code).to.be.eql(400);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Bad request\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"horasTeoricas\": \"HOLA\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoId}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos/id",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", () => {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Estructura de respuesta correcta\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.id).to.eql(pm.collectionVariables.get(\"alumnoId\"));\r",
+                  "    pm.expect(response).to.have.all.keys('id', 'nombre', 'apellidos', 'email', 'telefono', 'direccion', 'ciudad', 'dni', 'fechaNacimiento', 'usaGafas', 'notaTeorico', 'autoescuela');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Datos del alumno correctos\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.nombre).to.eql(\"Alvaro\");\r",
+                  "    pm.expect(response.apellidos).to.eql(\"Gonzalez\");\r",
+                  "    pm.expect(response.email).to.eql(\"1999alvaroreyes@gmail.com\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoId}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos/id (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code 404, Not Found\", () => {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Alumno no encontrado\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/99999",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "99999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos/id (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code 400, Bad Request\", () => {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Formato de ID incorrecto. Debe ser un número.\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/abc",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "abc"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Coche",
+      "item": [
+        {
+          "name": "/coches",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"matricula\": \"6767RBC\",\r\n  \"marca\": \"Toyota\",\r\n  \"modelo\": \"Corolla\",\r\n  \"tipoCambio\": \"Manual\",\r\n  \"kilometraje\": 45000,\r\n  \"fechaCompra\": \"2012-03-15\",\r\n  \"precioCompra\": 12500.50,\r\n  \"disponible\": true,\r\n  \"autoescuelaId\": 2,\r\n  \"image\": \"null\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches?marca=Mazda&modelo=3&tipoCambio=Manual",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches"
+              ],
+              "query": [
+                {
+                  "key": "marca",
+                  "value": "Mazda"
+                },
+                {
+                  "key": "modelo",
+                  "value": "3"
+                },
+                {
+                  "key": "tipoCambio",
+                  "value": "Manual"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"matricula\": \"6767RBC\",\r\n  \"marca\": \"Toyota\",\r\n  \"modelo\": \"Corola\",\r\n  \"tipoCambio\": \"Manual\",\r\n  \"kilometraje\": 45000,\r\n  \"fechaCompra\": \"2012-03-15\",\r\n  \"precioCompra\": 12500.50,\r\n  \"disponible\": true,\r\n  \"autoescuelaId\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id Copy",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"kilometraje\": \"10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id (v2)",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"kilometraje\": \"50000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v2/coches/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "coches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profesor",
+      "item": [
+        {
+          "name": "/profesores (V2)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Alvaro\",\r\n  \"apellidos\": \"Buenos Dias\",\r\n  \"dni\": \"11111111A\",\r\n  \"telefono\": \"666122456\",\r\n  \"salario\": 3800.00,\r\n  \"fechaContratacion\": \"2022-09-01\",\r\n  \"especialidad\": \"Práctico\",\r\n  \"activo\": true,\r\n  \"autoescuelaId\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v2/profesores",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores (V2) Copy",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Alvaro\",\r\n  \"apellidos\": \"Buenos Dias\",\r\n  \"dni\": \"11111111A\",\r\n  \"telefono\": \"666122456\",\r\n  \"salario\": 3800.00,\r\n  \"fechaContratacion\": \"2022-09-01\",\r\n  \"especialidad\": \"Pr\",\r\n  \"activo\": true,\r\n  \"autoescuelaId\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores?especialidad=Práctico",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores"
+              ],
+              "query": [
+                {
+                  "key": "especialidad",
+                  "value": "Práctico"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Carlos\",\r\n  \"apellidos\": \"Martínez López\",\r\n  \"dni\": \"12345678A\",\r\n  \"telefono\": \"666123456\",\r\n  \"salario\": 1800.00,\r\n  \"fechaContratacion\": \"2020-09-01\",\r\n  \"especialidad\": \"Teórico\",\r\n  \"activo\": true,\r\n  \"autoescuelaId\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Pedro\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Matricula Copy",
+      "item": [
+        {
+          "name": "/matriculas",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"modalidad\": \"Camion\",\r\n    \"tipoMatricula\": \"Intensiva\",\r\n    \"fechaInicio\": \"1999-06-16\",\r\n    \"fechaFinal\": \"2005-04-11\",\r\n    \"precio\": 1300.50,\r\n    \"horasPracticas\": 100,\r\n    \"horasTeoricas\": 100,\r\n    \"completada\": true,\r\n    \"observaciones\": \"Bien\",\r\n    \"autoescuelaId\": 1,\r\n    \"alumnoId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v1/matriculas",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/matriculas",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/matriculas?modalidad=Coche&tipoMatricula=Intensiva&horasPracticas=100&horasTeoricas=100",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas"
+              ],
+              "query": [
+                {
+                  "key": "modalidad",
+                  "value": "Coche"
+                },
+                {
+                  "key": "tipoMatricula",
+                  "value": "Intensiva"
+                },
+                {
+                  "key": "horasPracticas",
+                  "value": "100"
+                },
+                {
+                  "key": "horasTeoricas",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"modalidad\": \"Tractor\",\r\n    \"tipoMatricula\": \"Intensiva\",\r\n    \"fechaInicio\": \"1999-06-16\",\r\n    \"fechaFinal\": \"2005-04-11\",\r\n    \"precio\": 1300.50,\r\n    \"horasPracticas\": 100,\r\n    \"horasTeoricas\": 100,\r\n    \"completada\":   false,\r\n    \"observaciones\": \"Bien\",\r\n    \"metodoPago\": \"TARJETA\",\r\n    \"autoescuelaId\": 1,\r\n    \"alumnoId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{HOST}}/api/v2/matriculas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "matriculas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/matriculas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Compuestas Copy",
+      "item": [
+        {
+          "name": "/autoescuelas/id/profesores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1/profesores",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/coches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1/coches",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "coches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/matriculas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1/matriculas",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "matriculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/matriculas/completada",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1/matriculas/completadas",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "matriculas",
+                "completadas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/alumnos/suspensos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1/alumnos/suspensos",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "alumnos",
+                "suspensos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DELETES",
+      "item": [
+        {
+          "name": "/matriculas/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/matriculas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/profesores/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/coches/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code 204, No Content \", () => {\r",
+                  "    pm.expect(pm.response.code).to.be.eql(204);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoId}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos (404)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code 404 despues de borrar\", () => {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "pm.test(\"Hay mensaje de error\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response).to.have.property('message')\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Mensaje de error correcto\", () => {\r",
+                  "    const response = pm.response.json();\r",
+                  "    pm.expect(response.message).to.include(\"Alumno no encontrado\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/999",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/alumnos user2",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code 204, No Content\", () => {\r",
+                  "    pm.expect(pm.response.code).to.be.eql(204);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/alumnos/{{alumnoIdBorrar}}",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "alumnos",
+                "{{alumnoIdBorrar}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id (V2)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v2/autoescuelas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "autoescuelas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{HOST}}/api/v1/autoescuelas/1",
+              "host": [
+                "{{HOST}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "id",
+      "value": "1"
+    },
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "nombreAlumno",
+      "value": "Alvaro"
+    },
+    {
+      "key": "apellidosAlumno",
+      "value": "Reyes de Diego"
+    },
+    {
+      "key": "DNI",
+      "value": "39964150V"
+    },
+    {
+      "key": "fechaNacimiento",
+      "value": "1999-06-16"
+    },
+    {
+      "key": "telefonoAlumno",
+      "value": "633839069"
+    },
+    {
+      "key": "emailAlumno",
+      "value": "1999alvaroreyes@gmail.com"
+    },
+    {
+      "key": "direccionAlumno",
+      "value": "Calle Miami 2"
+    },
+    {
+      "key": "ciudadAlumno",
+      "value": "Reus"
+    },
+    {
+      "key": "notaTeorico",
+      "value": "4"
+    },
+    {
+      "key": "usaGafas",
+      "value": "true"
+    },
+    {
+      "key": "autoescuelaId",
+      "value": "1"
+    },
+    {
+      "key": "nombreAutoescuela",
+      "value": "Autoescuela SV"
+    },
+    {
+      "key": "direccionAutescuela",
+      "value": "Calle Violeta Parra 9"
+    },
+    {
+      "key": "ciudadAuteoescuela",
+      "value": "Zaragoza"
+    },
+    {
+      "key": "telefonoAutoescuela",
+      "value": "977753917"
+    },
+    {
+      "key": "emailAutoescuela",
+      "value": "autoescuela@sanvalero.com"
+    },
+    {
+      "key": "rating",
+      "value": "4.8"
+    },
+    {
+      "key": "activa",
+      "value": "true"
+    },
+    {
+      "key": "capacidad",
+      "value": "100"
+    },
+    {
+      "key": "fechaApertura",
+      "value": "2019-06-20"
+    },
+    {
+      "key": "latitud",
+      "value": "100.0"
+    },
+    {
+      "key": "longitud",
+      "value": "100.0"
+    },
+    {
+      "key": "matricula",
+      "value": "7539FSX"
+    },
+    {
+      "key": "marca",
+      "value": "Toyota"
+    },
+    {
+      "key": "modelo",
+      "value": "Corolla"
+    },
+    {
+      "key": "tipoCambio",
+      "value": "Manual"
+    },
+    {
+      "key": "kilometraje",
+      "value": "45000"
+    },
+    {
+      "key": "fechaCompra",
+      "value": "2013-03-15"
+    },
+    {
+      "key": "precioCompra",
+      "value": "12500.50"
+    },
+    {
+      "key": "disponible",
+      "value": "true"
+    },
+    {
+      "key": "image",
+      "value": "null"
+    },
+    {
+      "key": "nombreProfesor",
+      "value": "Santi"
+    },
+    {
+      "key": "apellidosProfesor",
+      "value": "Faci"
+    },
+    {
+      "key": "dniPofesor",
+      "value": "111111111A"
+    },
+    {
+      "key": "telefonoProfesor",
+      "value": "666122456"
+    },
+    {
+      "key": "salario",
+      "value": "3800.00"
+    },
+    {
+      "key": "fechaContratacion",
+      "value": "2022-09-01"
+    },
+    {
+      "key": "especialidad",
+      "value": "Práctico"
+    },
+    {
+      "key": "activo",
+      "value": "true"
+    },
+    {
+      "key": "autoescuelaIdProfesor",
+      "value": "[1,2]"
+    },
+    {
+      "key": "modalidad",
+      "value": "Camion"
+    },
+    {
+      "key": "tipoMatricula",
+      "value": "Intensiva"
+    },
+    {
+      "key": "fechaInicio",
+      "value": "2025-05-05"
+    },
+    {
+      "key": "fechaFinal",
+      "value": "2026-02-02"
+    },
+    {
+      "key": "precio",
+      "value": "1200.50"
+    },
+    {
+      "key": "horasPracticas",
+      "value": "100"
+    },
+    {
+      "key": "horasTeoricas",
+      "value": "10"
+    },
+    {
+      "key": "completada",
+      "value": "true"
+    },
+    {
+      "key": "observaciones",
+      "value": "Bien"
+    },
+    {
+      "key": "alumnoId",
+      "value": 29
+    },
+    {
+      "key": "nombreAlumno2",
+      "value": "Pedro"
+    },
+    {
+      "key": "apellidosAlumno2",
+      "value": "Pica Piedra"
+    },
+    {
+      "key": "notaTeorico2",
+      "value": "7"
+    },
+    {
+      "key": "alumno_id_postman",
+      "value": 9
+    },
+    {
+      "key": "alumnoIdBorrar",
+      "value": 30
+    }
+  ]
+}
