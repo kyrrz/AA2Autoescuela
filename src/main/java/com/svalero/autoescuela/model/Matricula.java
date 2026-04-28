@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 
@@ -35,6 +36,12 @@ public class Matricula {
     private boolean completada;
     @Column
     private String observaciones;
+    @Column(name = "metodo_pago")
+    @Value("TARJETA")
+    private String metodoPago;
+    @Column(name = "codigo_descuento")
+    @Value("REGULAR")
+    private String codigoDescuento;
 
 
     @ManyToOne

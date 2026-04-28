@@ -8,11 +8,15 @@ import com.svalero.autoescuela.exception.AlumnoNotFoundException;
 import com.svalero.autoescuela.exception.AutoescuelaNotFoundException;
 import com.svalero.autoescuela.exception.BadRequestException;
 import com.svalero.autoescuela.exception.ErrorResponse;
+import com.svalero.autoescuela.model.Alumno;
 import com.svalero.autoescuela.service.AlumnoService;
 import com.svalero.autoescuela.service.AutoescuelaService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -25,7 +29,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/alumnos")
+@RequestMapping("/api")
 public class AlumnoController {
 
     @Autowired
@@ -34,7 +38,7 @@ public class AlumnoController {
     @Autowired
     private AutoescuelaService autoescuelaService;
 
-    @GetMapping("")
+    @GetMapping("/v1/alumnos")
     public ResponseEntity<List<AlumnoOutDto>> getAll(
             @RequestParam(required = false) String nombre,
             @RequestParam(required = false) String ciudad,
@@ -45,13 +49,25 @@ public class AlumnoController {
         return ResponseEntity.ok(alumnoOutDtos);
     }
 
-    @GetMapping("/{id}")
+    /*Pensado para una API grande, el que tenga que mostrar todos los alumnos sin paginación sería una carga muy grande
+    he pensado también  que hacer el filtrado por Apellidos es mucho mejor, ya que en ámbito profesional es mucho mejor
+    tener guardados a los alumnos con Apellido1 Apellido2, Nombre , Ej: Reyes de Diego, Álvaro. */
+    @GetMapping("/v2/alumnos")
+    public ResponseEntity<Page<AlumnoOutDto>> getAlumnosV2(
+            @RequestParam(required = false) String apellido,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(alumnoService.findByFiltrosV2(apellido, pageable));
+    }
+
+    @GetMapping("/v1/alumnos/{id}")
     public ResponseEntity<AlumnoDetailOutDto> getAlumnoById(@PathVariable long id) throws AlumnoNotFoundException{
         return ResponseEntity.ok(alumnoService.findById(id));
     }
 
 
-    @PostMapping("")
+    @PostMapping("/v1/alumnos")
     public ResponseEntity<AlumnoDetailOutDto> addAlumno(@Valid @RequestBody AlumnoInDto alumnoInDto) throws AutoescuelaNotFoundException {
 
         AutoescuelaDetailOutDto autoescuelaDetailOutDto = autoescuelaService.findById(alumnoInDto.getAutoescuelaId());
@@ -60,7 +76,7 @@ public class AlumnoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoAlumno);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/v1/alumnos/{id}")
     public ResponseEntity<AlumnoDetailOutDto> modifyAlumno(@Valid @RequestBody AlumnoInDto alumnoInDto, @PathVariable long id) throws AlumnoNotFoundException, AutoescuelaNotFoundException {
         AutoescuelaDetailOutDto autoescuelaDetailOutDto = autoescuelaService.findById(alumnoInDto.getAutoescuelaId());
         System.out.println(autoescuelaDetailOutDto);
@@ -69,13 +85,13 @@ public class AlumnoController {
         return ResponseEntity.ok(alumnoUpdated);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/v1/alumnos/{id}")
     public ResponseEntity<Void> deleteAlumno(@PathVariable long id) throws AlumnoNotFoundException {
         alumnoService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/v1/alumnos/{id}")
     public ResponseEntity<AlumnoDetailOutDto> patchAlumno(@Valid @RequestBody Map<String, Object> patch, @PathVariable long id) throws AlumnoNotFoundException, AutoescuelaNotFoundException, BadRequestException {
         AlumnoDetailOutDto alumnoDetailOutDto = alumnoService.patch(id, patch);
         return  ResponseEntity.ok(alumnoDetailOutDto);

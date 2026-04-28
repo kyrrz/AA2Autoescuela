@@ -4,10 +4,10 @@ info:
   description: API REST para la gestión de autoescuelas, alumnos, profesores, coches y matrículas
   version: "1.0"
 servers:
-  - url: https://localhost:8080
+  - url: https://localhost:8080/api
 paths:
 
-  /autoescuelas:
+  /v1/autoescuelas:
     get:
       tags: [ Autoescuelas ]
       summary: Obtener listado de autoescuelas
@@ -129,7 +129,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /autoescuelas/{id}:
+  /v1/autoescuelas/{id}:
     get:
       tags: [ Autoescuelas ]
       summary: Obtener autoescuela por ID
@@ -379,7 +379,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /profesores:
+  /v1/profesores:
     get:
       tags: [ Profesores ]
       summary: Obtener listado de profesores
@@ -499,7 +499,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /profesores/{id}:
+  /v1/profesores/{id}:
     get:
       tags: [ Profesores ]
       summary: Obtener profesor por ID
@@ -722,7 +722,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /alumnos:
+  /v1/alumnos:
     get:
       tags: [ Alumnos ]
       summary: Obtener listado de alumnos
@@ -846,7 +846,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /alumnos/{id}:
+  /v1/alumnos/{id}:
     get:
       tags: [ Alumnos ]
       summary: Obtener alumno por ID
@@ -1085,7 +1085,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /coches:
+  /v1/coches:
     get:
       tags: [ Coches ]
       summary: Obtener listado de coches
@@ -1195,7 +1195,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /coches/{id}:
+  /v1/coches/{id}:
     get:
       tags: [ Coches ]
       summary: Obtener coche por ID
@@ -1434,7 +1434,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /matriculas:
+  /v1/matriculas:
     get:
       tags: [ Matriculas ]
       summary: Obtener listado de matrículas
@@ -1573,7 +1573,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /matriculas/{id}:
+  /v1/matriculas/{id}:
     get:
       tags: [ Matriculas ]
       summary: Obtener matrícula por ID
@@ -1842,7 +1842,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /autoescuelas/{id}/profesores:
+  /v1/autoescuelas/{id}/profesores:
     get:
       tags: [ Compuestas ]
       summary: Obtener profesores de una autoescuela
@@ -1885,7 +1885,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /autoescuelas/{id}/coches:
+  /v1/autoescuelas/{id}/coches:
     get:
       tags: [ Compuestas ]
       summary: Obtener coches de una autoescuela
@@ -1929,7 +1929,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /autoescuelas/{id}/matriculas:
+  /v1/autoescuelas/{id}/matriculas:
     get:
       tags: [ Compuestas ]
       summary: Obtener matrículas de una autoescuela
@@ -1981,7 +1981,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /autoescuelas/{id}/matriculas/completadas:
+  /v1/autoescuelas/{id}/matriculas/completadas:
     get:
       tags: [ Compuestas ]
       summary: Obtener matrículas completadas de una autoescuela
@@ -2033,7 +2033,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /autoescuelas/{id}/alumnos:
+  /v1/autoescuelas/{id}/alumnos:
     get:
       tags: [ Compuestas ]
       summary: Obtener alumnos de una autoescuela
@@ -2075,7 +2075,7 @@ paths:
                 message: "Error interno del servidor"
                 code: 500
 
-  /profesores/{id}/autoescuelas:
+  /v1/profesores/{id}/autoescuelas:
     get:
       tags: [ Compuestas ]
       summary: Obtener autoescuelas en las que imparte un profesor
