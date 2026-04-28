@@ -24,8 +24,10 @@ jobs:
           echo "MARIADB_DATABASE=${{ secrets.MARIADB_DATABASE }}" >> .env
           echo "PROFILE=prod" >> .env
           echo "DB_HOST=autoescuela-db" >> .env
-      - run: docker compose build
       - run: docker compose up -d
+      - name: Debuggear un rato
+        if: always()
+        run: docker logs autoescuela-db-2-prod
       - name: Wait for services
         run: sleep 30
       - run: npm install -g newman
