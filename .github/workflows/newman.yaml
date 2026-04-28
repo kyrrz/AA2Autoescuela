@@ -8,6 +8,13 @@ on:
 jobs:
   newman:
     runs-on: ubuntu-latest
+    env:
+      MARIADB_ROOT_PASSWORD: ${{ secrets.MARIADB_ROOT_PASSWORD }}
+      MARIADB_USER: ${{ secrets.MARIADB_USER }}
+      AUTOESCUELA_DATABASE_PASSWORD: ${{ secrets.AUTOESCUELA_DATABASE_PASSWORD }}
+      MARIADB_DATABASE: ${{ secrets.MARIADB_DATABASE }}
+      PROFILE: prod
+      DB_HOST: autoescuela-db
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-java@v5
