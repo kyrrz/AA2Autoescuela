@@ -8,13 +8,6 @@ on:
 jobs:
   newman:
     runs-on: ubuntu-latest
-    env:
-      MARIADB_ROOT_PASSWORD: ${{ secrets.MARIADB_ROOT_PASSWORD }}
-      MARIADB_USER: ${{ secrets.MARIADB_USER }}
-      AUTOESCUELA_DATABASE_PASSWORD: ${{ secrets.AUTOESCUELA_DATABASE_PASSWORD }}
-      MARIADB_DATABASE: ${{ secrets.MARIADB_DATABASE }}
-      PROFILE: prod
-      DB_HOST: autoescuela-db
     steps:
       - uses: actions/checkout@master
       - uses: actions/setup-java@v5
@@ -23,6 +16,14 @@ jobs:
           java-version: '21'
       - run: mvn package
       - run: docker build -t autoescuela-api .
+      - name: Create .env file
+        run: |
+          echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD }}" >> .env
+          echo "MARIADB_USER=${{ secrets.MARIADB_USER }}" >> .env
+          echo "AUTOESCUELA_DATABASE_PASSWORD=${{ secrets.AUTOESCUELA_DATABASE_PASSWORD }}" >> .env
+          echo "MARIADB_DATABASE=${{ secrets.MARIADB_DATABASE }}" >> .env
+          echo "PROFILE=prod" >> .env
+          echo "DB_HOST=autoescuela-db" >> .env
       - run: docker compose build
       - run: docker compose up -d
       - name: Wait for services
