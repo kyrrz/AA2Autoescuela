@@ -61,7 +61,7 @@ public class AlumnoControllerTests {
 
         when(alumnoService.findByFiltros(null,null,null,null)).thenReturn(alumnoOutDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/alumnos")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/alumnos")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -78,7 +78,7 @@ public class AlumnoControllerTests {
     // 400
     @Test
     public void testGetAll_badRequest() throws Exception {
-        mockMvc.perform(get("/alumnos")
+        mockMvc.perform(get("/api/v1/alumnos")
                         .param("usaGafas", "abc"))
                 .andExpect(status().isBadRequest());
     }
@@ -95,7 +95,7 @@ public class AlumnoControllerTests {
 
         when(alumnoService.findById(1L)).thenReturn(dto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/alumnos/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/alumnos/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -110,7 +110,7 @@ public class AlumnoControllerTests {
     // 400
     @Test
     public void testFindById_badRequest() throws Exception {
-        mockMvc.perform(get("/alumnos/a"))
+        mockMvc.perform(get("/api/v1/alumnos/a"))
                 .andExpect(status().isBadRequest());
     }
     // 404
@@ -119,7 +119,7 @@ public class AlumnoControllerTests {
         when(alumnoService.findById(1L))
                 .thenThrow(new AlumnoNotFoundException());
 
-        mockMvc.perform(get("/alumnos/1"))
+        mockMvc.perform(get("/api/v1/alumnos/1"))
                 .andExpect(status().isNotFound());
     }
 
@@ -140,7 +140,7 @@ public class AlumnoControllerTests {
         when(autoescuelaService.findById(2L)).thenReturn(autoescuelaDetailOutDto);
         when(alumnoService.add(inDto,autoescuelaDetailOutDto)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/alumnos")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/alumnos")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -163,7 +163,7 @@ public class AlumnoControllerTests {
         inDto.setApellidos("Reyes");
 
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/alumnos")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/alumnos")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -191,7 +191,7 @@ public class AlumnoControllerTests {
         when(autoescuelaService.findById(2L)).thenReturn(autoescuelaDetailOutDto);
         when(alumnoService.modify(1L, inDto, autoescuelaDetailOutDto)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/alumnos/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/alumnos/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -218,7 +218,7 @@ public class AlumnoControllerTests {
         when(autoescuelaService.findById(2L)).thenReturn(autoescuelaDetailOutDto);
         when(alumnoService.modify(99L, inDto, autoescuelaDetailOutDto)).thenThrow(new AlumnoNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/alumnos/99")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/alumnos/99")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -230,7 +230,7 @@ public class AlumnoControllerTests {
         AlumnoInDto inDto = new AlumnoInDto();
         inDto.setNombre("");
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/alumnos/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/alumnos/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -247,7 +247,7 @@ public class AlumnoControllerTests {
 
         doNothing().when(alumnoService).delete(1L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/alumnos/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/alumnos/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNoContent());
 
@@ -258,7 +258,7 @@ public class AlumnoControllerTests {
 
         doThrow(new AlumnoNotFoundException()).when(alumnoService).delete(99L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/alumnos/99")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/alumnos/99")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
 
@@ -267,7 +267,7 @@ public class AlumnoControllerTests {
     @Test
     public void testDelete_badRequest() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/alumnos/aa")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/alumnos/aa")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
 
@@ -287,7 +287,7 @@ public class AlumnoControllerTests {
 
         when(alumnoService.patch(1L, patch)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/alumnos/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/alumnos/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -312,7 +312,7 @@ public class AlumnoControllerTests {
 
         when(alumnoService.patch(99L, patch)).thenThrow(new AlumnoNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/alumnos/99")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/alumnos/99")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -328,7 +328,7 @@ public class AlumnoControllerTests {
         when(alumnoService.findById(1L)).thenThrow(new AlumnoNotFoundException());
         when(alumnoService.patch(1L, patch)).thenThrow(new BadRequestException());
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/alumnos/1")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/alumnos/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))

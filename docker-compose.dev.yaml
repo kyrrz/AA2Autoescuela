@@ -1,8 +1,8 @@
-name: autoescuela_aa2
+name: autoescuela_aa2_dev
 services:
   db:
     image: mariadb:11.3.2
-    container_name: autoescuela-db-2
+    container_name: autoescuela-db-2-dev
     environment:
       MYSQL_PORT: 3306
       MYSQL_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD

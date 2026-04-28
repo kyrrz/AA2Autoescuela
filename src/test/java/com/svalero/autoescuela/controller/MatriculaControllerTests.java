@@ -60,7 +60,7 @@ public class MatriculaControllerTests {
 
         when(matriculaService.findByFiltros(null, null, null, null)).thenReturn(matriculaOutDtos);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/matriculas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/matriculas")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -78,7 +78,7 @@ public class MatriculaControllerTests {
     // 400
     @Test
     public void testGetAll_badRequest() throws Exception {
-        mockMvc.perform(get("/matriculas")
+        mockMvc.perform(get("/api/v1/matriculas")
                         .param("horasPracticas", "abc"))
                 .andExpect(status().isBadRequest());
     }
@@ -96,7 +96,7 @@ public class MatriculaControllerTests {
 
         when(matriculaService.findById(1L)).thenReturn(dto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/matriculas/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/matriculas/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -112,7 +112,7 @@ public class MatriculaControllerTests {
     // 400
     @Test
     public void testFindById_badRequest() throws Exception {
-        mockMvc.perform(get("/matriculas/a"))
+        mockMvc.perform(get("/api/v1/matriculas/a"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -122,7 +122,7 @@ public class MatriculaControllerTests {
         when(matriculaService.findById(999L))
                 .thenThrow(new MatriculaNotFoundException());
 
-        mockMvc.perform(get("/matriculas/999"))
+        mockMvc.perform(get("/api/v1/matriculas/999"))
                 .andExpect(status().isNotFound());
     }
 
@@ -172,7 +172,7 @@ public class MatriculaControllerTests {
         when(matriculaService.add(inDto, alumnoDetailOutDto, autoescuelaDetailOutDto))
                 .thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/matriculas")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/matriculas")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -194,7 +194,7 @@ public class MatriculaControllerTests {
         inDto.setModalidad("");
         inDto.setTipoMatricula("Permiso B");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/matriculas")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/matriculas")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -241,7 +241,7 @@ public class MatriculaControllerTests {
 
         when(autoescuelaService.findById(999L)).thenThrow(new AutoescuelaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/matriculas")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/matriculas")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -290,7 +290,7 @@ public class MatriculaControllerTests {
         when(matriculaService.modify(1L, inDto, alumnoDetailOutDto, autoescuelaDetailOutDto))
                 .thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/matriculas/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/matriculas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -333,7 +333,7 @@ public class MatriculaControllerTests {
         when(matriculaService.modify(999L, inDto, alumnoDetailOutDto, autoescuelaDetailOutDto))
                 .thenThrow(new MatriculaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/matriculas/999")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/matriculas/999")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -346,7 +346,7 @@ public class MatriculaControllerTests {
         MatriculaInDto inDto = new MatriculaInDto();
         inDto.setModalidad("");
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/matriculas/1")
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/matriculas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(inDto)))
@@ -360,7 +360,7 @@ public class MatriculaControllerTests {
     public void testDelete_ok() throws Exception {
         doNothing().when(matriculaService).delete(1L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/matriculas/1")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/matriculas/1")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNoContent());
     }
@@ -369,7 +369,7 @@ public class MatriculaControllerTests {
     public void testDelete_notFound() throws Exception {
         doThrow(new MatriculaNotFoundException()).when(matriculaService).delete(999L);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/matriculas/999")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/matriculas/999")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isNotFound());
     }
@@ -377,7 +377,7 @@ public class MatriculaControllerTests {
     // 400
     @Test
     public void testDelete_badRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/matriculas/abc")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/matriculas/abc")
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest());
     }
@@ -398,7 +398,7 @@ public class MatriculaControllerTests {
 
         when(matriculaService.patch(1L, patch)).thenReturn(outDto);
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/matriculas/1")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/matriculas/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -420,7 +420,7 @@ public class MatriculaControllerTests {
 
         when(matriculaService.patch(999L, patch)).thenThrow(new MatriculaNotFoundException());
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/matriculas/999")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/matriculas/999")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(patch)))
@@ -430,7 +430,7 @@ public class MatriculaControllerTests {
     // 400
     @Test
     public void testPatch_badRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.patch("/matriculas/abc")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/matriculas/abc")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE)
                         .content("{}"))
