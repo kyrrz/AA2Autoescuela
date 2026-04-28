@@ -998,6 +998,825 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Autoescuela",
+      "item": [
+        {
+          "name": "/autoescuelas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/autoescuelas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autoescuelas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/autoescuelas?ciudad=Madrid&rating=4.7&activa=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autoescuelas"
+              ],
+              "query": [
+                {
+                  "key": "ciudad",
+                  "value": "Madrid"
+                },
+                {
+                  "key": "rating",
+                  "value": "4.7"
+                },
+                {
+                  "key": "activa",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/autoescuelas/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autoescuelas",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Autoescuela Svalero 9\",\r\n  \"direccion\": \"Avenida Diagonal 123\",\r\n  \"ciudad\": \"Zaragoza\",\r\n  \"telefono\": \"934567890\",\r\n  \"email\": \"contacto@ruedasfelices.com\",\r\n  \"capacidad\": 20,\r\n  \"rating\": 4.8,\r\n  \"fechaApertura\": \"2019-06-20\",\r\n  \"activa\": false,\r\n  \"latitud\": 100,\r\n  \"longitud\": 100\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/autoescuelas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autoescuelas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Autoescuela Svalero 4\",\r\n  \"direccion\": \"Avenida Diagonal 123\",\r\n  \"ciudad\": \"Zaragoza\",\r\n  \"telefono\": \"934567890\",\r\n  \"email\": \"contacto@ruedasfelices.com\",\r\n  \"capacidad\": 20,\r\n  \"rating\": 4.8,\r\n  \"fechaApertura\": \"2019-06-20\",\r\n  \"activa\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/autoescuelas/7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autoescuelas",
+                "7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id (V2)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v2/autoescuelas/3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "autoescuelas",
+                "3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/autoescuelas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Auto Escuelas Sanva Lero\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/autoescuelas/5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "autoescuelas",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Coche",
+      "item": [
+        {
+          "name": "/coches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/coches",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/coches/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coches",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/coches?marca=Mazda&modelo=3&tipoCambio=Manual",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coches"
+              ],
+              "query": [
+                {
+                  "key": "marca",
+                  "value": "Mazda"
+                },
+                {
+                  "key": "modelo",
+                  "value": "3"
+                },
+                {
+                  "key": "tipoCambio",
+                  "value": "Manual"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"matricula\": \"6767RBC\",\r\n  \"marca\": \"Toyota\",\r\n  \"modelo\": \"Corolla\",\r\n  \"tipoCambio\": \"Manual\",\r\n  \"kilometraje\": 45000,\r\n  \"fechaCompra\": \"2012-03-15\",\r\n  \"precioCompra\": 12500.50,\r\n  \"disponible\": true,\r\n  \"autoescuelaId\": 5\r\n  \"image\": \"null\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/coches",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "coches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"matricula\": \"6767RBC\",\r\n  \"marca\": \"Toyota\",\r\n  \"modelo\": \"Corola\",\r\n  \"tipoCambio\": \"Manual\",\r\n  \"kilometraje\": 45000,\r\n  \"fechaCompra\": \"2012-03-15\",\r\n  \"precioCompra\": 12500.50,\r\n  \"disponible\": true,\r\n  \"autoescuelaId\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coches/8",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coches",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/coches/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coches",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/coches/id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"matricula\": \"6262KRZ\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/coches/8",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "coches",
+                "8"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profesor",
+      "item": [
+        {
+          "name": "/profesores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/profesores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/profesores/4",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "profesores",
+                "4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/profesores?marca=Seat",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "profesores"
+              ],
+              "query": [
+                {
+                  "key": "marca",
+                  "value": "Seat"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Santi\",\r\n  \"apellidos\": \"Buenos Dias\",\r\n  \"dni\": \"11111111A\",\r\n  \"telefono\": \"666122456\",\r\n  \"salario\": 3800.00,\r\n  \"fechaContratacion\": \"2022-09-01\",\r\n  \"especialidad\": \"Teorico\",\r\n  \"activo\": true,\r\n  \"autoescuelaId\": [2,3,6]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/profesores",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Carlos\",\r\n  \"apellidos\": \"Martínez López\",\r\n  \"dni\": \"12345678A\",\r\n  \"telefono\": \"666123456\",\r\n  \"salario\": 1800.00,\r\n  \"fechaContratacion\": \"2020-09-01\",\r\n  \"especialidad\": \"Teorico\",\r\n  \"activo\": true,\r\n  \"autoescuelaId\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/profesores/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "profesores",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/profesores/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "profesores",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/profesores/id",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"autoescuelaId\": [2]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/profesores/14",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "profesores",
+                "14"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Matricula Copy",
+      "item": [
+        {
+          "name": "/matriculas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/matriculas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/matriculas/2",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "matriculas",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas?params",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/matriculas?modalidad=Coche&tipoMatricula=Intensiva&horasPracticas=100&horasTeoricas=100",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "matriculas"
+              ],
+              "query": [
+                {
+                  "key": "modalidad",
+                  "value": "Coche"
+                },
+                {
+                  "key": "tipoMatricula",
+                  "value": "Intensiva"
+                },
+                {
+                  "key": "horasPracticas",
+                  "value": "100"
+                },
+                {
+                  "key": "horasTeoricas",
+                  "value": "100"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"modalidad\": \"Camion\",\r\n    \"tipoMatricula\": \"Intensiva\",\r\n    \"fechaInicio\": \"1999-06-16\",\r\n    \"fechaFinal\": \"2005-04-11\",\r\n    \"precio\": 1300.50,\r\n    \"horasPracticas\": 100,\r\n    \"horasTeoricas\": 100,\r\n    \"completada\": true,\r\n    \"observaciones\": \"Bien\",\r\n    \"autoescuelaId\": 4,\r\n    \"alumnoId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8080/matriculas",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "matriculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas/id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"modalidad\": \"Tractor\",\r\n    \"tipoMatricula\": \"Intensiva\",\r\n    \"fechaInicio\": \"1999-06-16\",\r\n    \"fechaFinal\": \"2005-04-11\",\r\n    \"precio\": 1300.50,\r\n    \"horasPracticas\": 100,\r\n    \"horasTeoricas\": 100,\r\n    \"completada\":   false,\r\n    \"observaciones\": \"Bien\",\r\n    \"metodoPago\": \"TRANSFERENCIA\",\r\n    \"autoescuelaId\": 3,\r\n    \"alumnoId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/matriculas/1",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "matriculas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/matriculas/id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8080/matriculas/1",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "matriculas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Compuestas Copy",
+      "item": [
+        {
+          "name": "/autoescuelas/id/profesores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/autoescuelas/1/profesores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "profesores"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/coches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/autoescuelas/1/coches",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "coches"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/matriculas",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/autoescuelas/1/matriculas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "matriculas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/matriculas/completada",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/autoescuelas/1/matriculas/completadas",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "matriculas",
+                "completadas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/autoescuelas/id/alumnos/suspensos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/v1/autoescuelas/1/alumnos/suspensos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "autoescuelas",
+                "1",
+                "alumnos",
+                "suspensos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ],
   "variable": [
