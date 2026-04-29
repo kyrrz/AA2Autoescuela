@@ -4,7 +4,7 @@ info:
   description: API REST para la gestión de autoescuelas, alumnos, profesores, coches y matrículas
   version: "1.0"
 servers:
-  - url: https://localhost:8080/api
+  - url: https://localhost:8081/api
 paths:
 
   /v1/autoescuelas:
